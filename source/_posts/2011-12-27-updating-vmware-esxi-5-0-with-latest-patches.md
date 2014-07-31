@@ -23,16 +23,16 @@ VMware was nice enough to remove the pretty &#8220;GUI&#8221; Update Utility aft
 **How to Patch things up **
 
 1. Copy your patch to the ESXi Host.  You can use scp/ssh to do this  
-[crayon lang="sh" toolbar="true" nums="false"] scp ESXi500-201111001.zip root@10.10.10.206:/vmfs/volumes/datastore1/ [/crayon]  
+{% codeblock lang:objc %} scp ESXi500-201111001.zip root@10.10.10.206:/vmfs/volumes/datastore1/ {% endcodeblock %}  
 2. Force your EXSi to enter Maintenance Mode  
-[crayon lang="sh" toolbar="true" nums="false"] vicfg-hostops.pl &#8211;server=10.10.10.206 &#8211;username=root &#8211;password=\***\*** &#8211;operation enter [/crayon]  
+{% codeblock lang:objc %} vicfg-hostops.pl &#8211;server=10.10.10.206 &#8211;username=root &#8211;password=\***\*** &#8211;operation enter {% endcodeblock %}  
 3. Verify Maintenance Mode  
-[crayon lang="sh" toolbar="true" nums="false"] vicfg-hostops.pl &#8211;server=10.10.10.206 &#8211;username=root &#8211;password=\***\*** &#8211;operation info [/crayon]  
+{% codeblock lang:objc %} vicfg-hostops.pl &#8211;server=10.10.10.206 &#8211;username=root &#8211;password=\***\*** &#8211;operation info {% endcodeblock %}  
 &#8211;OR&#8211;  
-[crayon lang="sh" toolbar="true" nums="false"] vicfg-hostops.pl &#8211;server=10.10.10.206 &#8211;username=root &#8211;password=\***\*** &#8211;operation info | grep &#8220;In Maintenance Mode&#8221; [/crayon]  
+{% codeblock lang:objc %} vicfg-hostops.pl &#8211;server=10.10.10.206 &#8211;username=root &#8211;password=\***\*** &#8211;operation info | grep &#8220;In Maintenance Mode&#8221; {% endcodeblock %}  
 4. Update VM Host with your new patches  
-[crayon lang="sh" toolbar="true" nums="false"] esxcli &#8211;server=10.10.10.206 &#8211;username=root &#8211;password=\***\*** software vib update &#8211;depot=/vmfs/volumes/datastore1/ESXi500-201111001.zip [/crayon]  
+{% codeblock lang:objc %} esxcli &#8211;server=10.10.10.206 &#8211;username=root &#8211;password=\***\*** software vib update &#8211;depot=/vmfs/volumes/datastore1/ESXi500-201111001.zip {% endcodeblock %}  
 5. Reboot VM Host  
-[crayon lang="sh" toolbar="true" nums="false"] vicfg-hostops.pl &#8211;server=10.10.10.206 &#8211;username=root &#8211;password=\***\*** &#8211;operation reboot [/crayon]  
+{% codeblock lang:objc %} vicfg-hostops.pl &#8211;server=10.10.10.206 &#8211;username=root &#8211;password=\***\*** &#8211;operation reboot {% endcodeblock %}  
 6. Exit Maintenance Mode  
-[crayon lang="sh" toolbar="true" nums="false"] vicfg-hostops.pl &#8211;server=10.10.10.206 &#8211;username=root &#8211;password=\***\*** &#8211;operation exit [/crayon]
+{% codeblock lang:objc %} vicfg-hostops.pl &#8211;server=10.10.10.206 &#8211;username=root &#8211;password=\***\*** &#8211;operation exit {% endcodeblock %}

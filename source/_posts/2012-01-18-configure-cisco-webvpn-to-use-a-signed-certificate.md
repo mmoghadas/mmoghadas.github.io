@@ -25,13 +25,13 @@ If you like to install a Signed Certificate on your cisco Router&#8230;
 
 <!--more-->
 
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 crypto pki import ExampleWildcard-Crt pkcs12 tftp://10.10.10.65/certificate_file  
 !Yes to all  
-[/crayon]
+{% endcodeblock %}
 
 Updated the WebVPN configuration to use the new certificate:  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 webvpn gateway VTX-Admins  
 ssl trustpoint ExampleWildcard-Crt  
-[/crayon]
+{% endcodeblock %}

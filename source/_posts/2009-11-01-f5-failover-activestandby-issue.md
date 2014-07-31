@@ -18,19 +18,19 @@ In an F5 Active/Standby setup, Unit1 takes over as ACTIVE when it recovers from 
 <!--more-->
 
 On Active Unit (Unit1)  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 \# b db failover.forceactive show  
 Failover.ForceActive = enable  
 \# b db failover.forceactive disable  
 \# b db failover.forceactive show  
 Failover.ForceActive = disable  
-[/crayon]
+{% endcodeblock %}
 
 On Standby Unit (Unit2)  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 \# b db failover.forcestandby show  
 Failover.ForceStandby = enable  
 \# b db failover.forcestandby disable  
 \# b db failover.forcestandby show  
 Failover.ForceStandby = disable  
-[/crayon]
+{% endcodeblock %}

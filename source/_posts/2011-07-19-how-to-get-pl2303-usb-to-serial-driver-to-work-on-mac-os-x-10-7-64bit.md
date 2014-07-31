@@ -18,22 +18,22 @@ Location: <a href="http://sourceforge.net/tracker/index.php?func=detail&#038;aid
 1. Download the above driver for your 64bit OSX  
 2. Unpack the driver  
 3. Copy osx-pl2303.kext to /System/Library/Extensions  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 sudo cp -r ~/osx-pl2303.kext /System/Library/Extensions/  
-[/crayon]
+{% endcodeblock %}
 
 <!--more-->
 
 4. Load the driver  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 sudo kextload /System/Library/Extensions/osx-pl2303.kext  
-[/crayon]
+{% endcodeblock %}
 
 5. Plug your USB-to-Serial in  
 6. Test  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 ls -l /dev/cu.PL2303-*  
 or  
 ls -l /dev/tty.PL2303-*  
-[/crayon]  
+{% endcodeblock %}  
 7. If you see a device with above name, you have installed your driver successfully

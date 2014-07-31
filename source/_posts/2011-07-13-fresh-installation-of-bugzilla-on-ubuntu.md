@@ -10,63 +10,63 @@ tags:
   - Bugzilla
 ---
 **Install required packages**  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 apt-get install perl mysql-server mysql-client mysql-admin apache2  
 apt-get install build-essential libcgi-pm-perl libdigest-sha1-perl timedate libdatetime-event-sunrise-perl libdbi-perl libhtml-template-perl libemail-send-perl libemail-mime-perl libemail-mime-encodings-perl libemail-mime-modifier-perl liburi-perl libdbd-mysql-perl libtoolkit-perl libtemplate-perl libgd-gd2-perl libchart-perl libtemplate-plugin-gd-perl libxml-twig-perl libmime-tools-perl libwww-perl perlmagick libnet-ldap-perl libauthen-sasl-perl libauthen-simple-radius-perl libsoap-lite-perl libhtml-parser-perl libhtml-scrubber-perl libtheschwartz-perl libapache2-mod-perl2 libfile-slurp-perl libfile-flock-perl libyaml-perl  
-[/crayon]
+{% endcodeblock %}
 
 <!--more-->
 
 **Configure Database**  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 $ mysql -u root -p  
 mysql> create database bugzilla;  
 mysql> grant all privileges on bugzilla.* to bugzilla@localhost identified by &#8216;bugzilla&#8217;;  
-[/crayon]
+{% endcodeblock %}
 
 **Download and untar bugzilla **  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 $ tar -zxvf bugzilla-3.x  
 $ mv bugzilla-3.x /usr/local/bugzilla-3.x  
 $ ln -s /usr/local/bugzilla3.x /var/www/bugzilla  
 $ cd /usr/local/bugzilla-3.x  
 $ ./checksetup.pl &#8211;check-modules  
-[/crayon]
+{% endcodeblock %}
 
 **Most likely the installer will complain about missing modules. Here&#8217;s how you can install them:**  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 /usr/bin/perl install-module.pl Daemon::Generic  
 /usr/bin/perl install-module.pl Email::Reply  
 /usr/bin/perl install-module.pl PatchReader  
 /usr/bin/perl install-module.pl Email::MIME::Attachment::Stripper  
 /usr/bin/perl install-module.pl Template  
-[/crayon]
+{% endcodeblock %}
 
 **Recheck for missing modules and if successful, continue with the install**  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 $ ./checksetup.pl &#8211;check-modules  
 $ ./checksetup.pl  
-[/crayon]
+{% endcodeblock %}
 
 **Edit bugzilla&#8217;s configuration file and enter your database information**  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 $ vim localconfig  
 Edit following  
 $webservergroup = &#8216;www-data&#8217;;  
 $db_name = &#8216;bugzilla&#8217;;  
 $db_user = &#8216;bugzilla&#8217;;  
 $db_pass = &#8216;bugzilla&#8217;;  
-[/crayon]
+{% endcodeblock %}
 
 **Modify the database to support larger attachement sizes**  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 $ mysql -u root -p  
 mysql> use bugzilla;  
 mysql> alter table attachments avg\_row\_length=1000000, max_rows=20000;  
-[/crayon]
+{% endcodeblock %}
 
 **Configure Apache2 and your VirtualHost**  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 $ ./checksetup.pl  
 $ vim /etc/apache2/sites-available/bugzilla 
 
@@ -85,14 +85,14 @@ Options +Indexes +ExecCGI +FollowSymLinks
 DirectoryIndex index.cgi  
 AllowOverride Limit  
 </Directory>  
-[/crayon]
+{% endcodeblock %}
 
 **Create a symbolic link to enable bugzilla&#8217;s VirtualHost **  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 ln -s /etc/apache2/sites-available/bugzilla /etc/apache2/sites-enables/bugzilla  
-[/crayon]
+{% endcodeblock %}
 
 **Start/Restart Apache**  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 /etc/initd./apache2 restart  
-[/crayon]
+{% endcodeblock %}

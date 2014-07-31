@@ -32,18 +32,18 @@ You can run the script/cronjob from either Master or the Slave. I configured the
 **Step2:** Create the Replication Client user on Master and Slave. Run the following command on both servers. Make sure to grant REPLICATION CLIENT privilege only.
 
 *Note: replace the “\***\***\*****” with your password for the new account.*  
-[crayon lang="sql" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 mysql> GRANT REPLICATION CLIENT ON \*.\* TO &#8216;rep-client&#8217;@&#8217;192.168.1.101&#8242; IDENTIFIED BY &#8216;\***\***\*****&#8217;;  
-[/crayon]
+{% endcodeblock %}
 
 **Step3:** Test your newly created account’s permissions. Logon to the Slave server and run the following commands Master and the Slave:  
-[crayon lang="sql" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 mysql -urep-client -p\***\***\***** -h192.168.1.101 -e &#8220;show master statusG;&#8221;  
 mysql -urep-client -p\***\***\***** -h192.168.1.102 -e &#8220;show slave statusG;&#8221;  
-[/crayon]
+{% endcodeblock %}
 
 **Step4:** Create the following script  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 vi /root/scripts/MySQL\_Replication\_Check  
 #!/bin/bash
 
@@ -111,14 +111,14 @@ echo &#8220;Acceptable: YES&#8221;
 else  
 echo &#8220;Acceptable: NO, Slave is Way Behind!&#8221;  
 fi  
-[/crayon]
+{% endcodeblock %}
 
 **Step5:** Create a cronjob to run your new script every 60 seconds. You can adjust this if you like.. All depends on how busy your database is.  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 crontab -e  
 \# MySQL Replication Check  
 \* \* \* \* * /root/scripts/MySQL\_Replication\_Check  
-[/crayon]
+{% endcodeblock %}
 
 **Step6:** Configure your monitoring to receive SNMPTraps from your slave (or where you are running your cronjob). The following is meant to be used with PRTG. You can configure other monitoring tools to received SNMP Traps as well.  
 - Logon to the Web Interface  
@@ -134,6 +134,6 @@ Scanning Interval: 60 seconds
 
 **Step7:** Make sure you have SNMP Tools installed.  
 On Redhat:  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 yum install net-snmp-utils  
-[/crayon]
+{% endcodeblock %}

@@ -11,29 +11,29 @@ tags:
   - wsgi
 ---
 Install Apache2  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 sudo apt-get install apache2  
-[/crayon]
+{% endcodeblock %}
 
 <!--more-->
 
 Install MOD_WSGI  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 sudo apt-get install libapache2-mod-wsgi  
-[/crayon]
+{% endcodeblock %}
 
 Install Python (Installed by default, but just in case)  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 sudo apt-get install python  
-[/crayon]
+{% endcodeblock %}
 
 Install Python Setup Tools  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 sudo apt-get install python-setuptools  
-[/crayon]
+{% endcodeblock %}
 
 Install Django  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 apt-get install python-pip  
 pip install django  
-[/crayon]
+{% endcodeblock %}

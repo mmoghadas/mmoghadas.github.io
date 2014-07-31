@@ -17,17 +17,17 @@ anyconnect-macosx-i386-2.4.1012-k9.pkg<br />
 anyconnect-linux-2.4.1012-k9.pkg</p>
 <p>1. On the router</p>
 <p><!--more--></p>
-<p>[crayon lang="sh" toolbar="true" nums="false"]<br />
+<p>{% codeblock lang:objc %}<br />
 router.od100a#mkdir flash:/webvpn<br />
-[/crayon]</p>
+{% endcodeblock %}</p>
 <p>2. Use tftp to upload the following packages to flash:/webvpn<br />
-[crayon lang="sh" toolbar="true" nums="false"]<br />
+{% codeblock lang:objc %}<br />
 copy tftp://10.210.15.103/anyconnect-win-2.4.1012-k9.pkg flash:/webvpn/<br />
 copy tftp://10.210.15.103/anyconnect-macosx-i386-2.4.1012-k9.pkg flash:/webvpn/<br />
 copy tftp://10.210.15.103/anyconnect-linux-2.4.1012-k9.pkg flash:/webvpn/<br />
-[/crayon]</p>
+{% endcodeblock %}</p>
 <p>3. Create SelfSigned Certificate<br />
-[crayon lang="sh" toolbar="true" nums="false"]<br />
+{% codeblock lang:objc %}<br />
 conf t<br />
 crypto pki trustpoint VPOD-SelfSigned-SSL<br />
 enrollment selfsigned<br />
@@ -40,9 +40,9 @@ crypto pki enroll VPOD-SelfSigned-SSL</p>
 Enter Interface name or IP Address[]: FastEthernet0/0<br />
 Generate Self Signed Router Certificate? [yes/no]: yes<br />
 end<br />
-[/crayon]</p>
+{% endcodeblock %}</p>
 <p>4. Configure WebVPN<br />
-[crayon lang="sh" toolbar="true" nums="false"]<br />
+{% codeblock lang:objc %}<br />
 conf t<br />
 webvpn gateway VPOD-WebVPN<br />
 ip address 208.77.x.x port 443<br />
@@ -76,4 +76,4 @@ default-group-policy GPAdmins<br />
 aaa authentication list vpn-xauth-1<br />
 gateway VPOD-WebVPN<br />
 inservice<br />
-[/crayon] </p>
+{% endcodeblock %} </p>

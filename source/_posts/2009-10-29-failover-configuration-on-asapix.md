@@ -19,7 +19,7 @@ tags:
 
 **Active Unit**
 
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 interface Ethernet0/0  
 ip address 63.251.250.86 255.255.255.0 standby 63.251.250.87  
 interface Ethernet0/1  
@@ -33,13 +33,13 @@ failover key \***\***
 failover link failover Ethernet0/3  
 failover interface ip failover 192.168.98.1 255.255.255.0 standby 192.168.98.2  
 failover  
-[/crayon]
+{% endcodeblock %}
 
 **Failover Unit**  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 failover lan unit secondary  
 failover lan interface failover Ethernet0/3  
 failover key \***\***  
 failover interface ip failover 192.168.98.1 255.255.255.0 standby 192.168.98.2  
 failover  
-[/crayon]
+{% endcodeblock %}

@@ -11,18 +11,18 @@ Enabling remote logging on in linux is very simple. Most distributions include S
 
 Syslog  
 \# Add &#8220;-r&#8221; to the end of the &#8220;RSYSLOGD_OPTIONS&#8221;. Example:  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 vi /etc/default/syslog  
 RSYSLOGD_OPTIONS=&#8221;-c3 -r&#8221;
 
 service syslog restart  
-[/crayon]
+{% endcodeblock %}
 
 Rsyslog  
 \# Uncomment the following lines in /etc/rsyslog.conf file  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 $ModLoad imudp  
 $UDPServerRun 514
 
 service rsyslog restart  
-[/crayon]
+{% endcodeblock %}

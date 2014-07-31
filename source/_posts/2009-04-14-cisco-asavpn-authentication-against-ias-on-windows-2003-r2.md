@@ -24,9 +24,9 @@ Cisco ASA/PIX
 <!--more-->
 
 **Configure ASA to allow authentication via radius server **  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 aaa-server AuthGrp-PROD protocol radius  
 aaa-server AuthGrp-PROD (inside15) host 10.21.80.100 key \***\*****  
 Configure Tunnel Group Policy to allow authentication via above radius server  
 tunnel-group PRODAdmin general-attributes address-pool PRODAdmin-IPPool  
-[/crayon]
+{% endcodeblock %}

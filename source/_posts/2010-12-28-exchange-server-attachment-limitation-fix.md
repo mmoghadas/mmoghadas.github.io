@@ -18,30 +18,30 @@ On a new Exchange installation Mail Clients might fail to send large attachments
 
 <!--more-->
 
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 appcmd set config “Default Web Site/ews” -section:requestFiltering -requestLimits.maxAllowedContentLength:30000000  
 appcmd set config “Default Web Site/owa” -section:requestFiltering -requestLimits.maxAllowedContentLength:30000000  
 appcmd set config “Default Web Site/Microsoft-Server-Activesync” -section:requestFiltering -requestLimits.maxAllowedContentLength:30000000  
-[/crayon]
+{% endcodeblock %}
 
 2. Edit C:Program FilesMicrosoftExchange ServerV14ClientAccessexchwebewsweb.config and Modify  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 <httpRuntime maxRequestLength=”2097151″ />  
 to  
 <httpRuntime executionTimeout=”1200″ maxRequestLength=”30720″ />  
-[/crayon]
+{% endcodeblock %}
 
 3. Edit C:Program FilesMicrosoftExchange ServerV14ClientAccessexchwebewsweb.config and Modify  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 <EWSMessageEncoderSoap11Element />  
 <httpsTransport maxReceivedMessageSize=”13600000″ authenticationScheme=”Anonymous” maxBufferSize=”81920″ transferMode=”Streamed”>  
 to  
 <EWSMessageEncoderSoap11Element />  
 <httpsTransport maxReceivedMessageSize=”31457280″ authenticationScheme=”Anonymous” maxBufferSize=”81920″ transferMode=”Streamed”>  
-[/crayon]
+{% endcodeblock %}
 
 4. Edit C:Program FilesMicrosoftExchange ServerV14ClientAccessOwaweb.config and Modify  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 </system.webServer>  
 <system.web>  
 <httpRuntime maxRequestLength=”30000″ />  
@@ -49,4 +49,4 @@ to
 </system.webServer>  
 <system.web>  
 <httpRuntime maxRequestLength=”30000″ />  
-[/crayon]
+{% endcodeblock %}

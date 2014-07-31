@@ -11,15 +11,15 @@ tags:
 By now your 9.04 (Jaunty) is out of support and at some point you might want to install a package from Ubuntu repositories. You will need need to tweak a few things before you can install or upgrade your packages. Here&#8217;s an easy way to this:
 
 **Edit and update where Ubuntu gets it&#8217;s packages from**  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 sudo vi /etc/apt/sources.list  
 :%s/us.archive.ubuntu/old-releases.ubuntu/g  
 :%s/security.ubuntu/old-releases.ubuntu/g  
-[/crayon]
+{% endcodeblock %}
 
 **Update and resynchronize the package indexes**  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 sudo apt-get update  
-[/crayon]
+{% endcodeblock %}
 
 Now you should be able to install or upgrade packages

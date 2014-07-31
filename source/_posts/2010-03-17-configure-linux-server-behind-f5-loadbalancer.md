@@ -83,16 +83,16 @@ ON NETAPP101 and NETAPP102
 
 \# This is required to get this ports to work with load balancer  
 \# iptables -t nat -A PREROUTING -d LOADBALANCEADDRESSHERE -j DNAT &#8211;to-dest SERVERADDRESSHERE  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 $ iptables -t nat -A PREROUTING -d 10.176.160.51 -j DNAT &#8211;to-dest 10.176.160.103  
-[/crayon]
+{% endcodeblock %}
 
 \# Save config to file  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 /etc/init.d/iptables save  
-[/crayon]
+{% endcodeblock %}
 
 \# List the newly created NAT rule  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 $ iptables -t nat -L  
-[/crayon]
+{% endcodeblock %}

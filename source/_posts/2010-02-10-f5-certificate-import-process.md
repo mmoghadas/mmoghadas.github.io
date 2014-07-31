@@ -17,9 +17,9 @@ Note: This is assuming you currently have a valid certificate installed on some 
 
 <!--more-->
 
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 openssl pkcs12 -in example\_all.pfx -out example\_all_pem.cer –nodes  
-[/crayon]
+{% endcodeblock %}
 
 3. Import Cert via PEM to f5  
 Local Traffic > SSL Certificates > Import  

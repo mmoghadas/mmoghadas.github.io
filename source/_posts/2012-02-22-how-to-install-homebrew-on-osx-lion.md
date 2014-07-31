@@ -26,13 +26,13 @@ Launch Xcode > Preferences > Downloads > Command Line Tools > Install
 
 **To install Homebrew**  
 From Terminal  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 /usr/bin/ruby -e &#8220;$(/usr/bin/curl -fksSL https://raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb)&#8221;  
-[/crayon]
+{% endcodeblock %}
 
 Now you should be able to install available Unix Tools.  
 **To install packages**  
-[crayon lang="sh" toolbar="true" nums="false"]  
+{% codeblock lang:objc %}
 brew install <tool_name>  
 brew install git  
-[/crayon]
+{% endcodeblock %}
