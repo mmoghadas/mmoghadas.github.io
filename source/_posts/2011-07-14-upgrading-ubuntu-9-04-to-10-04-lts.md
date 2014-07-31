@@ -2,7 +2,6 @@
 title: Upgrading Ubuntu 9.04 to 10.04 LTS
 author: Mike Moghadas
 layout: post
-permalink: /?p=253
 categories:
   - Linux
 tags:

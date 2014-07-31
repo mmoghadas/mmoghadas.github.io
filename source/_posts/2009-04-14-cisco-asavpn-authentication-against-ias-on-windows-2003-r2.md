@@ -2,7 +2,6 @@
 title: Cisco ASA/VPN authentication against IAS on Windows 2003 R2
 author: Mike Moghadas
 layout: post
-permalink: /?p=306
 categories:
   - Cisco
   - Networking

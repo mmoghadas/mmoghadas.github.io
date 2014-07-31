@@ -2,7 +2,6 @@
 title: F5 Certificate Import Process
 author: Mike Moghadas
 layout: post
-permalink: /?p=298
 categories:
   - Networking
 tags:

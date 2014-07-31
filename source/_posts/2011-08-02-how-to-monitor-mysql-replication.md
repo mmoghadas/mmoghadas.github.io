@@ -2,7 +2,6 @@
 title: How to monitor MySQL Replication
 author: Mike Moghadas
 layout: post
-permalink: /?p=215
 categories:
   - Linux
   - MySQL

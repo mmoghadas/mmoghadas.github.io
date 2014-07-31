@@ -2,7 +2,6 @@
 title: Failover Configuration on ASA/PIX
 author: Mike Moghadas
 layout: post
-permalink: /?p=302
 categories:
   - Cisco
   - Networking

@@ -2,7 +2,6 @@
 title: Configure Cisco WebVPN to use a Signed Certificate
 author: Mike Moghadas
 layout: post
-permalink: /?p=137
 categories:
   - Cisco
   - Networking

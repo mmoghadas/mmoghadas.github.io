@@ -2,7 +2,6 @@
 title: Disable FWSM Module Cisco 6500
 author: Mike Moghadas
 layout: post
-permalink: /?p=283
 categories:
   - Cisco
   - Networking

@@ -2,7 +2,6 @@
 title: 'F5 Failover: Active/Standby Issue'
 author: Mike Moghadas
 layout: post
-permalink: /?p=300
 categories:
   - Networking
 tags:

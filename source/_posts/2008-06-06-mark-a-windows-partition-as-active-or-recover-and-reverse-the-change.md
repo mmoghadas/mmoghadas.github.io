@@ -2,7 +2,6 @@
 title: Mark a Windows partition as active or Recover and Reverse the change
 author: Mike Moghadas
 layout: post
-permalink: /?p=313
 categories:
   - Windows
 tags:

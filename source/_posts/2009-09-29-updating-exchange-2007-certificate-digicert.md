@@ -2,7 +2,6 @@
 title: Updating Exchange 2007 Certificate (DigiCert)
 author: Mike Moghadas
 layout: post
-permalink: /?p=304
 categories:
   - Exchange
 tags:

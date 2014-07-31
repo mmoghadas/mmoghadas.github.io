@@ -2,7 +2,6 @@
 title: How to install Homebrew on OSX Lion
 author: Mike Moghadas
 layout: post
-permalink: /?p=371
 categories:
   - Linux
   - Mac

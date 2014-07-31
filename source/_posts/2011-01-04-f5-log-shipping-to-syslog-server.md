@@ -2,7 +2,6 @@
 title: F5 Log shipping to syslog server
 author: Mike Moghadas
 layout: post
-permalink: /?p=286
 categories:
   - Networking
 tags:

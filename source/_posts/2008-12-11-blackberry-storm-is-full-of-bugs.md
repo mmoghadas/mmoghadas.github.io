@@ -2,7 +2,6 @@
 title: Blackberry Storm is full of bugs
 author: Mike Moghadas
 layout: post
-permalink: /?p=311
 categories:
   - Smart Phones
 tags:

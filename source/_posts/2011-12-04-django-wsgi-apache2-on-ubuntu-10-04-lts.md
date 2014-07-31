@@ -2,7 +2,6 @@
 title: Django, WSGI, Apache2 on Ubuntu 10.04 LTS
 author: Mike Moghadas
 layout: post
-permalink: /?p=196
 categories:
   - Linux
   - Web Server

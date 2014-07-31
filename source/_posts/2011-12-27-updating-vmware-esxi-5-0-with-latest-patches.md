@@ -2,7 +2,6 @@
 title: Updating VMware ESXI 5.0 with latest patches
 author: Mike Moghadas
 layout: post
-permalink: /?p=35
 categories:
   - Linux
   - VMware

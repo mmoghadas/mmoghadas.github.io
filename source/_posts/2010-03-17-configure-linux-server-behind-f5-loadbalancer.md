@@ -2,7 +2,6 @@
 title: Configure Linux server behind F5 Loadbalancer
 author: Mike Moghadas
 layout: post
-permalink: /?p=295
 categories:
   - Linux
   - Networking

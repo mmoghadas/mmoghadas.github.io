@@ -2,7 +2,6 @@
 title: Enabled WebVPN on Cisco routers (AnyConnect)
 author: Mike Moghadas
 layout: post
-permalink: /?p=289
 categories:
   - Cisco
   - Exchange

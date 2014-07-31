@@ -2,7 +2,6 @@
 title: Install and Configure Nginx+Django+uWSGI on Ubuntu 10.04 LTS
 author: Mike Moghadas
 layout: post
-permalink: /?p=167
 categories:
   - Linux
   - Web Server

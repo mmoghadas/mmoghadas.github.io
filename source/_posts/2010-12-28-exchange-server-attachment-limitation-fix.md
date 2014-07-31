@@ -2,7 +2,6 @@
 title: Exchange Server Attachment Limitation Fix
 author: Mike Moghadas
 layout: post
-permalink: /?p=292
 categories:
   - Exchange
   - Windows

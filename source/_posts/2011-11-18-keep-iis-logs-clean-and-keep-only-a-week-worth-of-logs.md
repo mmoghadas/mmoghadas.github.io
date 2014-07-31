@@ -2,7 +2,6 @@
 title: Keep IIS Logs Clean and keep only a week worth of logs
 author: Mike Moghadas
 layout: post
-permalink: /?p=202
 categories:
   - Uncategorized
 tags:

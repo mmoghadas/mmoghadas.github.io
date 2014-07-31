@@ -2,7 +2,6 @@
 title: Fresh Installation of Bugzilla on Ubuntu
 author: Mike Moghadas
 layout: post
-permalink: /?p=260
 categories:
   - Linux
   - Web Server

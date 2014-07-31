@@ -2,7 +2,6 @@
 title: Installing packages on an out-of-support Ubuntu 9.04
 author: Mike Moghadas
 layout: post
-permalink: /?p=257
 categories:
   - Linux
 tags:

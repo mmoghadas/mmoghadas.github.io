@@ -2,7 +2,6 @@
 title: How to prepare and install VMware Server on 64-bit CentOS 5.x
 author: Mike Moghadas
 layout: post
-permalink: /?p=315
 categories:
   - Linux
   - VMware

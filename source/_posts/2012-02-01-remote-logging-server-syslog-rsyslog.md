@@ -2,7 +2,6 @@
 title: 'Remote Logging Server: Syslog | Rsyslog'
 author: Mike Moghadas
 layout: post
-permalink: /?p=359
 categories:
   - Linux
 ---

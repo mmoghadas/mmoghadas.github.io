@@ -2,7 +2,6 @@
 title: 'Request Tracker: RT'
 author: Mike Moghadas
 layout: post
-permalink: /?p=317
 categories:
   - Linux
 tags:

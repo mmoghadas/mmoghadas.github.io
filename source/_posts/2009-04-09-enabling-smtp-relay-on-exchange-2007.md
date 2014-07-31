@@ -2,7 +2,6 @@
 title: Enabling SMTP Relay on Exchange 2007
 author: Mike Moghadas
 layout: post
-permalink: /?p=308
 categories:
   - Exchange
 tags:

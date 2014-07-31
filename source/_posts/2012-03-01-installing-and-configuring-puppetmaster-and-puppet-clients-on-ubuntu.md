@@ -2,7 +2,6 @@
 title: Installing and configuring Puppetmaster and Puppet Clients (On Ubuntu)
 author: Mike Moghadas
 layout: post
-permalink: /?p=383
 categories:
   - Linux
   - Puppet

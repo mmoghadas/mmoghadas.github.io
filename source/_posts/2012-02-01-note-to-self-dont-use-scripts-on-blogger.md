@@ -2,7 +2,6 @@
 title: 'Note to Self: Don&#8217;t use scripts on blogger!'
 author: Mike Moghadas
 layout: post
-permalink: /?p=356
 categories:
   - Blog
 ---

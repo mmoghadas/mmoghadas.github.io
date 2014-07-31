@@ -2,7 +2,6 @@
 title: Upgraded my Mac to 8GB RAM (First Gen Unibody with Removable Battery)
 author: Mike Moghadas
 layout: post
-permalink: /?p=263
 categories:
   - Mac
   - OSX

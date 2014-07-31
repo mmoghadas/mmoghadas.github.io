@@ -2,7 +2,6 @@
 title: How to get PL2303 USB to Serial Driver to work on Mac OS X 10.7 (64bit)
 author: Mike Moghadas
 layout: post
-permalink: /?p=243
 categories:
   - OSX
 tags:

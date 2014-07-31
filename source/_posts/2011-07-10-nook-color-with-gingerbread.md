@@ -2,7 +2,6 @@
 title: Nook Color with Gingerbread
 author: Mike Moghadas
 layout: post
-permalink: /?p=270
 categories:
   - Nook
 tags:

@@ -2,7 +2,6 @@
 title: Cleanup (Purge) Exchange Mailboxes by date
 author: Mike Moghadas
 layout: post
-permalink: /?p=279
 categories:
   - Exchange
   - Windows
