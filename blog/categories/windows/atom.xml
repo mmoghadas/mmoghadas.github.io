@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: windows | reg88.com]]></title>
+  <link href="http://mmoghadas.github.io/blog/categories/windows/atom.xml" rel="self"/>
+  <link href="http://mmoghadas.github.io/"/>
+  <updated>2014-07-31T16:05:25-07:00</updated>
+  <id>http://mmoghadas.github.io/</id>
+  <author>
+    <name><![CDATA[Mike Moghadas]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cleanup (Purge) Exchange Mailboxes by date]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/06/03/cleanup-purge-exchange-mailboxes-by-date/"/>
+    <updated>2011-06-03T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/06/03/cleanup-purge-exchange-mailboxes-by-date</id>
+    <content type="html"><![CDATA[<p><strong>To cleanup an Exchange Mailbox and delete messages older than a certain date:</strong></p>
+
+<p>Logon to Exchange Management Shell<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">Search</span><span class="o">-</span><span class="n">Mailbox</span> <span class="o">-</span><span class="n">Identity</span> <span class="err">“</span><span class="n">mailbox_name</span><span class="err">”</span> <span class="o">-</span><span class="n">SearchQuery</span> <span class="err">“</span><span class="n">Received</span><span class="o">:&gt;</span> <span class="err">$</span><span class="p">(</span><span class="err">’</span><span class="mi">10</span><span class="o">/</span><span class="mo">01</span><span class="o">/</span><span class="mi">2008</span><span class="err">′</span><span class="p">)</span> <span class="n">and</span> <span class="n">Received</span><span class="o">:&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="err">$</span><span class="p">(</span><span class="err">’</span><span class="mi">10</span><span class="o">/</span><span class="mo">05</span><span class="o">/</span><span class="mi">2010</span><span class="err">′</span><span class="p">)</span><span class="err">”</span> <span class="o">-</span><span class="n">EstimateResultOnly</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">Search</span><span class="o">-</span><span class="n">Mailbox</span> <span class="o">-</span><span class="n">Identity</span> <span class="err">“</span><span class="n">mailbox_name</span><span class="err">”</span> <span class="o">-</span><span class="n">SearchQuery</span> <span class="err">“</span><span class="n">Received</span><span class="o">:&gt;</span> <span class="err">$</span><span class="p">(</span><span class="err">’</span><span class="mi">10</span><span class="o">/</span><span class="mo">01</span><span class="o">/</span><span class="mi">2008</span><span class="err">′</span><span class="p">)</span> <span class="n">and</span> <span class="n">Received</span><span class="o">:&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="err">$</span><span class="p">(</span><span class="err">’</span><span class="mi">10</span><span class="o">/</span><span class="mo">05</span><span class="o">/</span><span class="mi">2010</span><span class="err">′</span><span class="p">)</span><span class="err">”</span> <span class="o">-</span><span class="n">DeleteContent</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Exchange Server Attachment Limitation Fix]]></title>
+    <link href="http://mmoghadas.github.io/blog/2010/12/28/exchange-server-attachment-limitation-fix/"/>
+    <updated>2010-12-28T00:00:00-08:00</updated>
+    <id>http://mmoghadas.github.io/blog/2010/12/28/exchange-server-attachment-limitation-fix</id>
+    <content type="html"><![CDATA[<p><strong>Problem</strong><br/>
+On a new Exchange installation Mail Clients might fail to send large attachments. This is doe to the default values set by OWA, IMAP, EWS.</p>
+
+<p><strong>Fix</strong><br/>
+1. Run the following commands from c:windowssystem32inetsrv</p>
+
+<!--more-->
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">appcmd</span> <span class="n">set</span> <span class="n">config</span> <span class="err">“</span><span class="n">Default</span> <span class="n">Web</span> <span class="n">Site</span><span class="o">/</span><span class="n">ews</span><span class="err">”</span> <span class="o">-</span><span class="n">section</span><span class="o">:</span><span class="n">requestFiltering</span> <span class="o">-</span><span class="n">requestLimits</span><span class="p">.</span><span class="n">maxAllowedContentLength</span><span class="o">:</span><span class="mi">30000000</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">appcmd</span> <span class="n">set</span> <span class="n">config</span> <span class="err">“</span><span class="n">Default</span> <span class="n">Web</span> <span class="n">Site</span><span class="o">/</span><span class="n">owa</span><span class="err">”</span> <span class="o">-</span><span class="n">section</span><span class="o">:</span><span class="n">requestFiltering</span> <span class="o">-</span><span class="n">requestLimits</span><span class="p">.</span><span class="n">maxAllowedContentLength</span><span class="o">:</span><span class="mi">30000000</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">appcmd</span> <span class="n">set</span> <span class="n">config</span> <span class="err">“</span><span class="n">Default</span> <span class="n">Web</span> <span class="n">Site</span><span class="o">/</span><span class="n">Microsoft</span><span class="o">-</span><span class="n">Server</span><span class="o">-</span><span class="n">Activesync</span><span class="err">”</span> <span class="o">-</span><span class="n">section</span><span class="o">:</span><span class="n">requestFiltering</span> <span class="o">-</span><span class="n">requestLimits</span><span class="p">.</span><span class="n">maxAllowedContentLength</span><span class="o">:</span><span class="mi">30000000</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<ol>
+<li><p>Edit C:Program FilesMicrosoftExchange ServerV14ClientAccessexchwebewsweb.config and Modify<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;</span><span class="n">httpRuntime</span> <span class="n">maxRequestLength</span><span class="o">=</span><span class="err">”</span><span class="mi">2097151</span><span class="err">″</span> <span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">to</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">httpRuntime</span> <span class="n">executionTimeout</span><span class="o">=</span><span class="err">”</span><span class="mi">1200</span><span class="err">″</span> <span class="n">maxRequestLength</span><span class="o">=</span><span class="err">”</span><span class="mi">30720</span><span class="err">″</span> <span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+<li><p>Edit C:Program FilesMicrosoftExchange ServerV14ClientAccessexchwebewsweb.config and Modify<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;</span><span class="n">EWSMessageEncoderSoap11Element</span> <span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">httpsTransport</span> <span class="n">maxReceivedMessageSize</span><span class="o">=</span><span class="err">”</span><span class="mi">13600000</span><span class="err">″</span> <span class="n">authenticationScheme</span><span class="o">=</span><span class="err">”</span><span class="n">Anonymous</span><span class="err">”</span> <span class="n">maxBufferSize</span><span class="o">=</span><span class="err">”</span><span class="mi">81920</span><span class="err">″</span> <span class="n">transferMode</span><span class="o">=</span><span class="err">”</span><span class="n">Streamed</span><span class="err">”</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">to</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">EWSMessageEncoderSoap11Element</span> <span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">httpsTransport</span> <span class="n">maxReceivedMessageSize</span><span class="o">=</span><span class="err">”</span><span class="mi">31457280</span><span class="err">″</span> <span class="n">authenticationScheme</span><span class="o">=</span><span class="err">”</span><span class="n">Anonymous</span><span class="err">”</span> <span class="n">maxBufferSize</span><span class="o">=</span><span class="err">”</span><span class="mi">81920</span><span class="err">″</span> <span class="n">transferMode</span><span class="o">=</span><span class="err">”</span><span class="n">Streamed</span><span class="err">”</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+<li><p>Edit C:Program FilesMicrosoftExchange ServerV14ClientAccessOwaweb.config and Modify<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">/</span><span class="n">system</span><span class="p">.</span><span class="n">webServer</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">system</span><span class="p">.</span><span class="n">web</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">httpRuntime</span> <span class="n">maxRequestLength</span><span class="o">=</span><span class="err">”</span><span class="mi">30000</span><span class="err">″</span> <span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">to</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">/</span><span class="n">system</span><span class="p">.</span><span class="n">webServer</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">system</span><span class="p">.</span><span class="n">web</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">httpRuntime</span> <span class="n">maxRequestLength</span><span class="o">=</span><span class="err">”</span><span class="mi">30000</span><span class="err">″</span> <span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cisco ASA/VPN authentication against IAS on Windows 2003 R2]]></title>
+    <link href="http://mmoghadas.github.io/blog/2009/04/14/cisco-asavpn-authentication-against-ias-on-windows-2003-r2/"/>
+    <updated>2009-04-14T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2009/04/14/cisco-asavpn-authentication-against-ias-on-windows-2003-r2</id>
+    <content type="html"><![CDATA[<p><strong>IAS Configuration</strong></p>
+
+<p>Start > Administrative Tools > Internet Authentication Service<br/>
+Create a new Client for ASA Device (192.168.121.254) with Standard Radius configuration<br/>
+Configure Remote Access Policies to allow authentication for the above client<br/>
+Cisco ASA/PIX</p>
+
+<!--more-->
+
+
+<p><strong>Configure ASA to allow authentication via radius server </strong><br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">aaa</span><span class="o">-</span><span class="n">server</span> <span class="n">AuthGrp</span><span class="o">-</span><span class="n">PROD</span> <span class="n">protocol</span> <span class="n">radius</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">aaa</span><span class="o">-</span><span class="n">server</span> <span class="n">AuthGrp</span><span class="o">-</span><span class="n">PROD</span> <span class="p">(</span><span class="n">inside15</span><span class="p">)</span> <span class="n">host</span> <span class="mf">10.21.80.100</span> <span class="n">key</span> <span class="o">*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;**&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">Configure</span> <span class="n">Tunnel</span> <span class="n">Group</span> <span class="n">Policy</span> <span class="n">to</span> <span class="n">allow</span> <span class="n">authentication</span> <span class="n">via</span> <span class="n">above</span> <span class="n">radius</span> <span class="n">server</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">tunnel</span><span class="o">-</span><span class="n">group</span> <span class="n">PRODAdmin</span> <span class="n">general</span><span class="o">-</span><span class="n">attributes</span> <span class="n">address</span><span class="o">-</span><span class="n">pool</span> <span class="n">PRODAdmin</span><span class="o">-</span><span class="n">IPPool</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Mark a Windows partition as active or Recover and Reverse the change]]></title>
+    <link href="http://mmoghadas.github.io/blog/2008/06/06/mark-a-windows-partition-as-active-or-recover-and-reverse-the-change/"/>
+    <updated>2008-06-06T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2008/06/06/mark-a-windows-partition-as-active-or-recover-and-reverse-the-change</id>
+    <content type="html"><![CDATA[<p>Have you accidently marked a partition as active in a Windows 2003 Server? It’s easy to reverse what you’ve done: USE DISKPART TO FIX IT.</p>
+
+<!--more-->
+
+
+<ol>
+<li>Open Command Prompt</li>
+<li><p>Type:<br/>
+# DISKPART</p></li>
+<li><p>List your disks<br/>
+# LIST DISK</p></li>
+<li><p>Select the disk your unwanted “Active” partition is on<br/>
+# SELECT DISK</p></li>
+<li><p>List your disk’s partitions<br/>
+# LIST PARTITION</p></li>
+<li><p>Type:<br/>
+# INACTIVE</p></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>

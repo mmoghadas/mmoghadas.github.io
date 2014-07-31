@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: exchange | reg88.com]]></title>
+  <link href="http://mmoghadas.github.io/blog/categories/exchange/atom.xml" rel="self"/>
+  <link href="http://mmoghadas.github.io/"/>
+  <updated>2014-07-31T16:05:25-07:00</updated>
+  <id>http://mmoghadas.github.io/</id>
+  <author>
+    <name><![CDATA[Mike Moghadas]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cleanup (Purge) Exchange Mailboxes by date]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/06/03/cleanup-purge-exchange-mailboxes-by-date/"/>
+    <updated>2011-06-03T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/06/03/cleanup-purge-exchange-mailboxes-by-date</id>
+    <content type="html"><![CDATA[<p><strong>To cleanup an Exchange Mailbox and delete messages older than a certain date:</strong></p>
+
+<p>Logon to Exchange Management Shell<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">Search</span><span class="o">-</span><span class="n">Mailbox</span> <span class="o">-</span><span class="n">Identity</span> <span class="err">“</span><span class="n">mailbox_name</span><span class="err">”</span> <span class="o">-</span><span class="n">SearchQuery</span> <span class="err">“</span><span class="n">Received</span><span class="o">:&gt;</span> <span class="err">$</span><span class="p">(</span><span class="err">’</span><span class="mi">10</span><span class="o">/</span><span class="mo">01</span><span class="o">/</span><span class="mi">2008</span><span class="err">′</span><span class="p">)</span> <span class="n">and</span> <span class="n">Received</span><span class="o">:&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="err">$</span><span class="p">(</span><span class="err">’</span><span class="mi">10</span><span class="o">/</span><span class="mo">05</span><span class="o">/</span><span class="mi">2010</span><span class="err">′</span><span class="p">)</span><span class="err">”</span> <span class="o">-</span><span class="n">EstimateResultOnly</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">Search</span><span class="o">-</span><span class="n">Mailbox</span> <span class="o">-</span><span class="n">Identity</span> <span class="err">“</span><span class="n">mailbox_name</span><span class="err">”</span> <span class="o">-</span><span class="n">SearchQuery</span> <span class="err">“</span><span class="n">Received</span><span class="o">:&gt;</span> <span class="err">$</span><span class="p">(</span><span class="err">’</span><span class="mi">10</span><span class="o">/</span><span class="mo">01</span><span class="o">/</span><span class="mi">2008</span><span class="err">′</span><span class="p">)</span> <span class="n">and</span> <span class="n">Received</span><span class="o">:&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="err">$</span><span class="p">(</span><span class="err">’</span><span class="mi">10</span><span class="o">/</span><span class="mo">05</span><span class="o">/</span><span class="mi">2010</span><span class="err">′</span><span class="p">)</span><span class="err">”</span> <span class="o">-</span><span class="n">DeleteContent</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Exchange Server Attachment Limitation Fix]]></title>
+    <link href="http://mmoghadas.github.io/blog/2010/12/28/exchange-server-attachment-limitation-fix/"/>
+    <updated>2010-12-28T00:00:00-08:00</updated>
+    <id>http://mmoghadas.github.io/blog/2010/12/28/exchange-server-attachment-limitation-fix</id>
+    <content type="html"><![CDATA[<p><strong>Problem</strong><br/>
+On a new Exchange installation Mail Clients might fail to send large attachments. This is doe to the default values set by OWA, IMAP, EWS.</p>
+
+<p><strong>Fix</strong><br/>
+1. Run the following commands from c:windowssystem32inetsrv</p>
+
+<!--more-->
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">appcmd</span> <span class="n">set</span> <span class="n">config</span> <span class="err">“</span><span class="n">Default</span> <span class="n">Web</span> <span class="n">Site</span><span class="o">/</span><span class="n">ews</span><span class="err">”</span> <span class="o">-</span><span class="n">section</span><span class="o">:</span><span class="n">requestFiltering</span> <span class="o">-</span><span class="n">requestLimits</span><span class="p">.</span><span class="n">maxAllowedContentLength</span><span class="o">:</span><span class="mi">30000000</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">appcmd</span> <span class="n">set</span> <span class="n">config</span> <span class="err">“</span><span class="n">Default</span> <span class="n">Web</span> <span class="n">Site</span><span class="o">/</span><span class="n">owa</span><span class="err">”</span> <span class="o">-</span><span class="n">section</span><span class="o">:</span><span class="n">requestFiltering</span> <span class="o">-</span><span class="n">requestLimits</span><span class="p">.</span><span class="n">maxAllowedContentLength</span><span class="o">:</span><span class="mi">30000000</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">appcmd</span> <span class="n">set</span> <span class="n">config</span> <span class="err">“</span><span class="n">Default</span> <span class="n">Web</span> <span class="n">Site</span><span class="o">/</span><span class="n">Microsoft</span><span class="o">-</span><span class="n">Server</span><span class="o">-</span><span class="n">Activesync</span><span class="err">”</span> <span class="o">-</span><span class="n">section</span><span class="o">:</span><span class="n">requestFiltering</span> <span class="o">-</span><span class="n">requestLimits</span><span class="p">.</span><span class="n">maxAllowedContentLength</span><span class="o">:</span><span class="mi">30000000</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<ol>
+<li><p>Edit C:Program FilesMicrosoftExchange ServerV14ClientAccessexchwebewsweb.config and Modify<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;</span><span class="n">httpRuntime</span> <span class="n">maxRequestLength</span><span class="o">=</span><span class="err">”</span><span class="mi">2097151</span><span class="err">″</span> <span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">to</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">httpRuntime</span> <span class="n">executionTimeout</span><span class="o">=</span><span class="err">”</span><span class="mi">1200</span><span class="err">″</span> <span class="n">maxRequestLength</span><span class="o">=</span><span class="err">”</span><span class="mi">30720</span><span class="err">″</span> <span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+<li><p>Edit C:Program FilesMicrosoftExchange ServerV14ClientAccessexchwebewsweb.config and Modify<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;</span><span class="n">EWSMessageEncoderSoap11Element</span> <span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">httpsTransport</span> <span class="n">maxReceivedMessageSize</span><span class="o">=</span><span class="err">”</span><span class="mi">13600000</span><span class="err">″</span> <span class="n">authenticationScheme</span><span class="o">=</span><span class="err">”</span><span class="n">Anonymous</span><span class="err">”</span> <span class="n">maxBufferSize</span><span class="o">=</span><span class="err">”</span><span class="mi">81920</span><span class="err">″</span> <span class="n">transferMode</span><span class="o">=</span><span class="err">”</span><span class="n">Streamed</span><span class="err">”</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">to</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">EWSMessageEncoderSoap11Element</span> <span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">httpsTransport</span> <span class="n">maxReceivedMessageSize</span><span class="o">=</span><span class="err">”</span><span class="mi">31457280</span><span class="err">″</span> <span class="n">authenticationScheme</span><span class="o">=</span><span class="err">”</span><span class="n">Anonymous</span><span class="err">”</span> <span class="n">maxBufferSize</span><span class="o">=</span><span class="err">”</span><span class="mi">81920</span><span class="err">″</span> <span class="n">transferMode</span><span class="o">=</span><span class="err">”</span><span class="n">Streamed</span><span class="err">”</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+<li><p>Edit C:Program FilesMicrosoftExchange ServerV14ClientAccessOwaweb.config and Modify<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">/</span><span class="n">system</span><span class="p">.</span><span class="n">webServer</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">system</span><span class="p">.</span><span class="n">web</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">httpRuntime</span> <span class="n">maxRequestLength</span><span class="o">=</span><span class="err">”</span><span class="mi">30000</span><span class="err">″</span> <span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">to</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">/</span><span class="n">system</span><span class="p">.</span><span class="n">webServer</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">system</span><span class="p">.</span><span class="n">web</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">httpRuntime</span> <span class="n">maxRequestLength</span><span class="o">=</span><span class="err">”</span><span class="mi">30000</span><span class="err">″</span> <span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Enabled WebVPN on Cisco routers (AnyConnect)]]></title>
+    <link href="http://mmoghadas.github.io/blog/2010/12/28/enabled-webvpn-on-cisco-routers-anyconnect/"/>
+    <updated>2010-12-28T00:00:00-08:00</updated>
+    <id>http://mmoghadas.github.io/blog/2010/12/28/enabled-webvpn-on-cisco-routers-anyconnect</id>
+    <content type="html"><![CDATA[<p><strong>Upload AnyConnect Packages</strong><br />
+anyconnect-win-2.4.1012-k9.pkg<br />
+anyconnect-macosx-i386-2.4.1012-k9.pkg<br />
+anyconnect-linux-2.4.1012-k9.pkg</p>
+
+
+<p>1. On the router</p>
+
+
+<p><!--more--></p>
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">router</span><span class="p">.</span><span class="n">od100a</span><span class="err">#</span><span class="n">mkdir</span> <span class="n">flash</span><span class="o">:/</span><span class="n">webvpn</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+
+<p>2. Use tftp to upload the following packages to flash:/webvpn<br />
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">copy</span> <span class="n">tftp</span><span class="o">:</span><span class="c1">//10.210.15.103/anyconnect-win-2.4.1012-k9.pkg flash:/webvpn/&lt;br /&gt;</span>
+</span><span class='line'><span class="n">copy</span> <span class="n">tftp</span><span class="o">:</span><span class="c1">//10.210.15.103/anyconnect-macosx-i386-2.4.1012-k9.pkg flash:/webvpn/&lt;br /&gt;</span>
+</span><span class='line'><span class="n">copy</span> <span class="n">tftp</span><span class="o">:</span><span class="c1">//10.210.15.103/anyconnect-linux-2.4.1012-k9.pkg flash:/webvpn/&lt;br /&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+
+<p>3. Create SelfSigned Certificate<br />
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">conf</span> <span class="n">t</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">crypto</span> <span class="n">pki</span> <span class="n">trustpoint</span> <span class="n">VPOD</span><span class="o">-</span><span class="n">SelfSigned</span><span class="o">-</span><span class="n">SSL</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">enrollment</span> <span class="n">selfsigned</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">rsakeypair</span> <span class="n">VPOD</span><span class="o">-</span><span class="n">SelfSigned</span><span class="o">-</span><span class="n">SSL</span> <span class="mi">1024</span> <span class="mi">1024</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">end</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">Router</span><span class="err">#</span><span class="n">conf</span> <span class="n">t</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">crypto</span> <span class="n">pki</span> <span class="n">enroll</span> <span class="n">VPOD</span><span class="o">-</span><span class="n">SelfSigned</span><span class="o">-</span><span class="n">SSL</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;%</span> <span class="n">Include</span> <span class="n">the</span> <span class="n">router</span> <span class="n">serial</span> <span class="n">number</span> <span class="k">in</span> <span class="n">the</span> <span class="n">subject</span> <span class="n">name</span><span class="o">?</span> <span class="p">[</span><span class="n">yes</span><span class="o">/</span><span class="n">no</span><span class="p">]</span><span class="o">:</span> <span class="n">yes</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">%</span> <span class="n">Include</span> <span class="n">an</span> <span class="n">IP</span> <span class="n">address</span> <span class="k">in</span> <span class="n">the</span> <span class="n">subject</span> <span class="n">name</span><span class="o">?</span> <span class="p">[</span><span class="n">no</span><span class="p">]</span><span class="o">:</span> <span class="n">yes</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">Enter</span> <span class="n">Interface</span> <span class="n">name</span> <span class="n">or</span> <span class="n">IP</span> <span class="n">Address</span><span class="p">[]</span><span class="o">:</span> <span class="n">FastEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">Generate</span> <span class="n">Self</span> <span class="n">Signed</span> <span class="n">Router</span> <span class="n">Certificate</span><span class="o">?</span> <span class="p">[</span><span class="n">yes</span><span class="o">/</span><span class="n">no</span><span class="p">]</span><span class="o">:</span> <span class="n">yes</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">end</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+
+<p>4. Configure WebVPN<br />
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">conf</span> <span class="n">t</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">webvpn</span> <span class="n">gateway</span> <span class="n">VPOD</span><span class="o">-</span><span class="n">WebVPN</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">ip</span> <span class="n">address</span> <span class="mf">208.77</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">x</span> <span class="n">port</span> <span class="mi">443</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">ssl</span> <span class="n">trustpoint</span> <span class="n">VPOD</span><span class="o">-</span><span class="n">SelfSigned</span><span class="o">-</span><span class="n">SSL</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">inservice</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">webvpn</span> <span class="n">install</span> <span class="n">svc</span> <span class="n">flash</span><span class="o">:/</span><span class="n">webvpn</span><span class="o">/</span><span class="n">anyconnect</span><span class="o">-</span><span class="n">win</span><span class="o">-</span><span class="mf">2.4.1012</span><span class="o">-</span><span class="n">k9</span><span class="p">.</span><span class="n">pkg</span> <span class="n">sequence</span> <span class="mi">1</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">webvpn</span> <span class="n">install</span> <span class="n">svc</span> <span class="n">flash</span><span class="o">:/</span><span class="n">webvpn</span><span class="o">/</span><span class="n">anyconnect</span><span class="o">-</span><span class="n">macosx</span><span class="o">-</span><span class="n">i386</span><span class="o">-</span><span class="mf">2.4.1012</span><span class="o">-</span><span class="n">k9</span><span class="p">.</span><span class="n">pkg</span> <span class="n">sequence</span> <span class="mi">2</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">webvpn</span> <span class="n">install</span> <span class="n">svc</span> <span class="n">flash</span><span class="o">:/</span><span class="n">webvpn</span><span class="o">/</span><span class="n">anyconnect</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="mf">2.4.1012</span><span class="o">-</span><span class="n">k9</span><span class="p">.</span><span class="n">pkg</span> <span class="n">sequence</span> <span class="mi">3</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">webvpn</span> <span class="n">context</span> <span class="n">Admins</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">title</span> <span class="err">“</span><span class="n">VPOD</span><span class="o">-</span><span class="n">WebVPN</span> <span class="k">for</span> <span class="n">example</span> <span class="n">Administrators</span><span class="err">”</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">secondary</span><span class="o">-</span><span class="n">color</span> <span class="err">#</span><span class="mi">9</span><span class="n">ABEDC</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">title</span><span class="o">-</span><span class="n">color</span> <span class="err">#</span><span class="mi">4186</span><span class="n">BE</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">ssl</span> <span class="n">authenticate</span> <span class="n">verify</span> <span class="n">all</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">url</span><span class="o">-</span><span class="n">list</span> <span class="err">“</span><span class="n">AdminLinks</span><span class="err">”</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">heading</span> <span class="err">“</span><span class="n">AdminLinks</span><span class="err">”</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">url</span><span class="o">-</span><span class="n">text</span> <span class="err">“</span><span class="n">v1</span><span class="err">″</span> <span class="n">url</span><span class="o">-</span><span class="n">value</span> <span class="err">“</span><span class="n">http</span><span class="o">:</span><span class="c1">//x.example.com”&lt;br /&gt;</span>
+</span><span class='line'><span class="n">url</span><span class="o">-</span><span class="n">text</span> <span class="err">“</span><span class="n">v2</span><span class="err">″</span> <span class="n">url</span><span class="o">-</span><span class="n">value</span> <span class="err">“</span><span class="n">http</span><span class="o">:</span><span class="c1">//y.example.com”&lt;br /&gt;</span>
+</span><span class='line'><span class="n">exit</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">policy</span> <span class="n">group</span> <span class="n">GPAdmins</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">url</span><span class="o">-</span><span class="n">list</span> <span class="err">“</span><span class="n">AdminLinks</span><span class="err">”</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">functions</span> <span class="n">svc</span><span class="o">-</span><span class="n">enabled</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">svc</span> <span class="n">address</span><span class="o">-</span><span class="n">pool</span> <span class="err">“</span><span class="n">ravpn</span><span class="o">-</span><span class="n">pool</span><span class="o">-</span><span class="mi">1</span><span class="err">″</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">svc</span> <span class="k">default</span><span class="o">-</span><span class="n">domain</span> <span class="err">“</span><span class="n">vpod</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">net</span><span class="err">”</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">svc</span> <span class="n">keep</span><span class="o">-</span><span class="n">client</span><span class="o">-</span><span class="n">installed</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">svc</span> <span class="n">rekey</span> <span class="n">method</span> <span class="n">new</span><span class="o">-</span><span class="n">tunnel</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">svc</span> <span class="n">split</span> <span class="n">include</span> <span class="mf">172.10.10.0</span> <span class="mf">255.255.255.0</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">svc</span> <span class="n">dns</span><span class="o">-</span><span class="n">server</span> <span class="n">primary</span> <span class="mf">208.67.220.220</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">svc</span> <span class="n">dns</span><span class="o">-</span><span class="n">server</span> <span class="n">secondary</span> <span class="mf">208.67.222.222</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">exit</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="k">default</span><span class="o">-</span><span class="n">group</span><span class="o">-</span><span class="n">policy</span> <span class="n">GPAdmins</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">aaa</span> <span class="n">authentication</span> <span class="n">list</span> <span class="n">vpn</span><span class="o">-</span><span class="n">xauth</span><span class="o">-</span><span class="mi">1</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">gateway</span> <span class="n">VPOD</span><span class="o">-</span><span class="n">WebVPN</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="n">inservice</span><span class="o">&lt;</span><span class="n">br</span> <span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div> </p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Updating Exchange 2007 Certificate (DigiCert)]]></title>
+    <link href="http://mmoghadas.github.io/blog/2009/09/29/updating-exchange-2007-certificate-digicert/"/>
+    <updated>2009-09-29T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2009/09/29/updating-exchange-2007-certificate-digicert</id>
+    <content type="html"><![CDATA[<p><strong>Creating CSR (Request)</strong></p>
+
+<p>Visit DigiCert&#8217;s Exchange 2007 CSR Tool @ <a href="https://www.digicert.com/easy-csr/exchange2007.htm  ">https://www.digicert.com/easy-csr/exchange2007.htm  </a>
+Fill the form and generate the &#8220;command&#8221; to create the CSR on Exchange 2007. The command should look like this</p>
+
+<!--more-->
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">New</span><span class="o">-</span><span class="n">ExchangeCertificate</span> <span class="o">-</span><span class="n">GenerateRequest</span> <span class="o">-</span><span class="n">Path</span> <span class="n">c</span><span class="o">:</span><span class="n">mailserver_subdomain_example_com</span><span class="p">.</span><span class="n">csr</span> <span class="o">-</span><span class="n">KeySize</span> <span class="mi">2048</span> <span class="o">-</span><span class="n">SubjectName</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">c</span><span class="o">=</span><span class="n">US</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">California</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="n">Campbell</span><span class="p">,</span> <span class="n">o</span><span class="o">=</span><span class="n">Company</span> <span class="n">LLC</span><span class="p">,</span> <span class="n">ou</span><span class="o">=</span><span class="n">IT</span><span class="p">,</span> <span class="n">cn</span><span class="o">=</span><span class="n">mailserver</span><span class="p">.</span><span class="n">subdomain</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="o">-</span><span class="n">DomainName</span> <span class="n">mailserver</span><span class="p">.</span><span class="n">subdomain</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">,</span> <span class="n">autodiscover</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">,</span> <span class="n">autodiscover</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">,</span> <span class="n">webmail</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">,</span> <span class="n">mail</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">,</span> <span class="n">mailserver</span> <span class="o">-</span><span class="n">PrivateKeyExportable</span> <span class="err">$</span><span class="n">True</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Copy the generated command into &#8220;Exchange Management Shell&#8221;. The file &#8220;c:mailserver_subdomain_example_com.csr&#8221; is created and needs to be sent to DigiCert</p>
+
+<p><strong>Importing CER (Certificate)</strong></p>
+
+<p>Once you have the signed certificate&#8230;</p>
+
+<ol>
+<li><p>Copy the acquired certificate to drive accessible to Exchange. i.e. C:mailserver_subdomain_example_com.cer</p></li>
+<li><p>Run the following import command and enable required services (IIS and SMTP)<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">Import</span><span class="o">-</span><span class="n">ExchangeCertificate</span> <span class="o">-</span><span class="n">Path</span> <span class="n">C</span><span class="o">:</span><span class="n">mailserver_subdomain_example_com</span><span class="p">.</span><span class="n">cer</span> <span class="o">|</span> <span class="n">Enable</span><span class="o">-</span><span class="n">ExchangeCertificate</span> <span class="o">-</span><span class="n">Services</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">SMTP</span><span class="p">,</span> <span class="n">IIS</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+<li><p>Confirm the services<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">Get</span><span class="o">-</span><span class="n">ExchangeCertificate</span> <span class="o">-</span><span class="n">DomainName</span> <span class="n">mailserver</span><span class="p">.</span><span class="n">subdomain</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">Thumbprint</span> <span class="n">Services</span> <span class="n">Subject</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="err">#</span><span class="mi">8212</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8212</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8212</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8212</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8212</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8212</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8212</span><span class="p">;</span><span class="o">-&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="err">#</span><span class="mi">8230</span><span class="p">;.</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="mi">1113</span><span class="n">D77630A34FDEA3D465779897431694204423</span> <span class="n">IP</span><span class="p">.</span><span class="n">WS</span> <span class="n">CN</span><span class="o">=</span><span class="n">mailserver</span><span class="p">.</span><span class="n">subdomain</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">,</span> <span class="n">OU</span><span class="o">=</span><span class="n">IT</span><span class="p">,</span> <span class="n">O</span><span class="o">=</span><span class="n">Company</span> <span class="n">LLC</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">Camp</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8230</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&amp;</span><span class="err">#</span><span class="mi">8230</span><span class="p">;.</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+</ol>
+
+
+<p>Enable services if missing<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="mf">4.</span> <span class="n">Enable</span><span class="o">-</span><span class="n">ExchangeCertificate</span> <span class="o">-</span><span class="n">Services</span> <span class="n">SMTP</span><span class="p">,</span> <span class="n">IIS</span> <span class="o">-</span><span class="n">thumbprint</span> <span class="mi">1113</span><span class="n">D77630A34FDEA3D465779897431694204423</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Enabling SMTP Relay on Exchange 2007]]></title>
+    <link href="http://mmoghadas.github.io/blog/2009/04/09/enabling-smtp-relay-on-exchange-2007/"/>
+    <updated>2009-04-09T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2009/04/09/enabling-smtp-relay-on-exchange-2007</id>
+    <content type="html"><![CDATA[<p>To Enable Relaying on port 486 for Local Network (10.10.10.0/24) on Exchange Serever.</p>
+
+<p>Exchange Management Console > Server Configuration > Hub Transport<br/>
+Select MailServer Hub Transport<br/>
+Select Internal Relay MailServer Receive Connector > Properties > Network<br/>
+Add 10.10.10.0/24 to Receive mail form remote servers&#8230;</p>
+]]></content>
+  </entry>
+  
+</feed>

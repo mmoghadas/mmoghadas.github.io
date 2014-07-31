@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: uncategorized | reg88.com]]></title>
+  <link href="http://mmoghadas.github.io/blog/categories/uncategorized/atom.xml" rel="self"/>
+  <link href="http://mmoghadas.github.io/"/>
+  <updated>2014-07-31T16:05:25-07:00</updated>
+  <id>http://mmoghadas.github.io/</id>
+  <author>
+    <name><![CDATA[Mike Moghadas]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Keep IIS Logs Clean and keep only a week worth of logs]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/11/18/keep-iis-logs-clean-and-keep-only-a-week-worth-of-logs/"/>
+    <updated>2011-11-18T00:00:00-08:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/11/18/keep-iis-logs-clean-and-keep-only-a-week-worth-of-logs</id>
+    <content type="html"><![CDATA[<p>Webserver logs can add up and eventually fill up your entire disk if not mananged properly. Windows and IIS don&#8217;t exactly give you flexible options to manage logs either. So what to do? Here&#8217;s simple solution. We&#8217;re going to create couple of scripts and kick off a Task to purge old logs.</p>
+
+<p>Lets create a folder to store the scripts<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">mkdir</span> <span class="n">C</span><span class="o">:</span><span class="n">scripts</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<!--more-->
+
+
+<p>Create a batch file to kick off a powershell script<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">notepad</span> <span class="n">C</span><span class="o">:</span><span class="n">scriptsDelete</span><span class="o">-</span><span class="n">Old</span><span class="o">-</span><span class="n">IIS</span><span class="o">-</span><span class="n">Logs</span><span class="p">.</span><span class="n">bat</span> <span class="err">#</span><span class="n">Add</span> <span class="n">the</span> <span class="n">below</span> <span class="n">line</span> <span class="n">to</span> <span class="n">the</span> <span class="p">.</span><span class="n">bat</span> <span class="n">file</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">powershell</span><span class="p">.</span><span class="n">exe</span> <span class="n">C</span><span class="o">:</span><span class="n">scriptsDelete</span><span class="o">-</span><span class="n">Old</span><span class="o">-</span><span class="n">IIS</span><span class="o">-</span><span class="n">Logs</span><span class="p">.</span><span class="n">ps1</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Lets create a powershell script that will clean up the logs and leave 7 days worth<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">notepad</span> <span class="n">C</span><span class="o">:</span><span class="n">scriptsDelete</span><span class="o">-</span><span class="n">Old</span><span class="o">-</span><span class="n">IIS</span><span class="o">-</span><span class="n">Logs</span><span class="p">.</span><span class="n">ps1</span> <span class="err">#</span><span class="n">Add</span> <span class="n">the</span> <span class="n">below</span> <span class="n">lines</span> <span class="n">to</span> <span class="n">the</span> <span class="p">.</span><span class="n">ps1</span> <span class="n">file</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="err">$</span><span class="n">Path</span> <span class="o">=</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">C</span><span class="o">:</span><span class="n">inetpublogsLogFilesW3SVC1</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8243</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="err">$</span><span class="n">LogsToKeep</span> <span class="o">=</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="mi">7</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8243</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="err">$</span><span class="n">CurrentDate</span> <span class="o">=</span> <span class="n">Get</span><span class="o">-</span><span class="n">Date</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="err">$</span><span class="n">DatetoDelete</span> <span class="o">=</span> <span class="err">$</span><span class="n">CurrentDate</span><span class="p">.</span><span class="n">AddDays</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="err">$</span><span class="n">LogsToKeep</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Get</span><span class="o">-</span><span class="n">ChildItem</span> <span class="err">$</span><span class="n">Path</span> <span class="o">-</span><span class="n">recurse</span> <span class="o">|</span> <span class="n">Where</span><span class="o">-</span><span class="n">Object</span> <span class="p">{</span> <span class="err">$</span><span class="n">_</span><span class="p">.</span><span class="n">LastWriteTime</span> <span class="o">-</span><span class="n">lt</span> <span class="err">$</span><span class="n">DatetoDelete</span> <span class="p">}</span> <span class="o">|</span> <span class="n">Remove</span><span class="o">-</span><span class="n">Item</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Create a new Task via Task Scheduler and Check the following settings:<br/>
+&ndash; Run whether user is logged on or not<br/>
+&ndash; Run with highest privileges<br/>
+&ndash; Action should be: Start a Program and pointing to &#8220;:scriptsDelete-Old-IIS-Logs.bat&#8221;</p>
+]]></content>
+  </entry>
+  
+</feed>

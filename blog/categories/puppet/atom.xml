@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: puppet | reg88.com]]></title>
+  <link href="http://mmoghadas.github.io/blog/categories/puppet/atom.xml" rel="self"/>
+  <link href="http://mmoghadas.github.io/"/>
+  <updated>2014-07-31T16:05:25-07:00</updated>
+  <id>http://mmoghadas.github.io/</id>
+  <author>
+    <name><![CDATA[Mike Moghadas]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Installing and configuring Puppetmaster and Puppet Clients (On Ubuntu)]]></title>
+    <link href="http://mmoghadas.github.io/blog/2012/03/01/installing-and-configuring-puppetmaster-and-puppet-clients-on-ubuntu/"/>
+    <updated>2012-03-01T00:00:00-08:00</updated>
+    <id>http://mmoghadas.github.io/blog/2012/03/01/installing-and-configuring-puppetmaster-and-puppet-clients-on-ubuntu</id>
+    <content type="html"><![CDATA[<p>Puppet is a great Client/Server automation tool for your *NIX environment. The tool can be used to automate:</p>
+
+<p>Installations<br/>
+Updates<br/>
+Deployment<br/>
+Service manipulation<br/>
+etc&#8230;</p>
+
+<p>NOTE: Typically, the client(puppet/node) retrieves updates from the server (Puppetmaster). However you can enable push from the server to client as well. See &#8220;Client Configuration&#8221;.</p>
+
+<p>Follow the below steps to get a basic configuration going.</p>
+
+<!--more-->
+
+
+<p><strong>Installation: Server</strong><br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">puppetmaster</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Installation: Client</strong><br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">puppet</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Note: </strong><em>Although not required, you may want to make sure you have the same version of Puppet and Puppetmaster. I have Puppet 2.6.3 and Puppetmaster 2.7.1 running sucessfully, but have had issues with previous versions and installations.</em></p>
+
+<p>If you like to install the same exact version of client/server you have some options:<br/>
+1. Install via Ruby<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span> <span class="n">zlib1g</span> <span class="n">zlib1g</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxml2</span> <span class="n">libxml2</span><span class="o">-</span><span class="n">dev</span> <span class="n">curl</span> <span class="n">wget</span> <span class="n">openssl</span> <span class="n">libssl</span><span class="o">-</span><span class="n">dev</span> <span class="n">libopenssl</span><span class="o">-</span><span class="n">ruby</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">mkdir</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">installs</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">cd</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">installs</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">wget</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.2-p180.tar.gz  &quot;</span><span class="o">&gt;</span><span class="n">http</span><span class="o">:</span><span class="c1">//ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.2-p180.tar.gz  &lt;/a&gt;</span>
+</span><span class='line'><span class="n">tar</span> <span class="n">zxvf</span> <span class="n">ruby</span><span class="o">-</span><span class="mf">1.9.2</span><span class="o">-</span><span class="n">p180</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">cd</span> <span class="n">ruby</span><span class="o">-</span><span class="mf">1.9.2</span><span class="o">-</span><span class="n">p180</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="p">.</span><span class="o">/</span><span class="n">configure</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">make</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">make</span> <span class="n">install</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">gem</span> <span class="n">update</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">system</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">gem</span> <span class="n">install</span> <span class="n">facter</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">gem</span> <span class="n">install</span> <span class="n">puppet</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<ol>
+<li>Install from source (Assuming you have ruby installed)<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">wget</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://puppetlabs.com/downloads/facter/facter-latest.tgz  &quot;</span><span class="o">&gt;</span><span class="n">http</span><span class="o">:</span><span class="c1">//puppetlabs.com/downloads/facter/facter-latest.tgz  &lt;/a&gt;</span>
+</span><span class='line'><span class="n">gzip</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">c</span> <span class="n">facter</span><span class="o">-</span><span class="n">latest</span><span class="p">.</span><span class="n">tgz</span> <span class="o">|</span> <span class="n">tar</span> <span class="n">xf</span> <span class="o">-&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">cd</span> <span class="n">facter</span><span class="o">-*&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">ruby</span> <span class="n">install</span><span class="p">.</span><span class="n">rb</span><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ol</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wget</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://puppetlabs.com/downloads/puppet/puppet-latest.tgz  &quot;</span><span class="o">&gt;</span><span class="n">http</span><span class="o">:</span><span class="c1">//puppetlabs.com/downloads/puppet/puppet-latest.tgz  &lt;/a&gt;</span>
+</span><span class='line'><span class="n">gzip</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">c</span> <span class="n">puppet</span><span class="o">-</span><span class="n">latest</span><span class="p">.</span><span class="n">tgz</span> <span class="o">|</span> <span class="n">tar</span> <span class="n">xf</span> <span class="o">-&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">ruby</span> <span class="n">install</span><span class="p">.</span><span class="n">rb</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<ol>
+<li><p>Another way to install<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">ruby</span> <span class="n">rubygems</span> <span class="n">libopenssl</span><span class="o">-</span><span class="n">ruby</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">export</span> <span class="n">RUBYOPT</span><span class="o">=</span><span class="n">rubygems</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">gem</span> <span class="n">install</span> <span class="n">facter</span> <span class="n">puppet</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+<li><p>Install form 3rd Party repository<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">software</span><span class="o">-</span><span class="n">properties</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">add</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">repository</span> <span class="n">ppa</span><span class="o">:</span><span class="n">mathiaz</span><span class="o">/</span><span class="n">puppet</span><span class="o">-</span><span class="n">backports</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">puppetmaster</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">-</span><span class="n">OR</span><span class="o">-&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">puppet</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+</ol>
+
+
+<p><strong>Configuration: Server</strong><br/>
+Edit the puppet.conf file and add the following lines<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">puppet</span><span class="p">.</span><span class="n">conf</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="p">[</span><span class="n">agent</span><span class="p">]</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">classfile</span> <span class="o">=</span> <span class="err">$</span><span class="n">vardir</span><span class="o">/</span><span class="n">classes</span><span class="p">.</span><span class="n">txt</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">localconfig</span> <span class="o">=</span> <span class="err">$</span><span class="n">vardir</span><span class="o">/</span><span class="n">localconfig</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">report</span> <span class="o">=</span> <span class="nb">true</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">[</span><span class="n">master</span><span class="p">]</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">autosign</span> <span class="o">=</span> <span class="nb">true</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Edit the fileserver.conf file and add the following lines<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">fileserver</span><span class="p">.</span><span class="n">conf</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">[</span><span class="n">files</span><span class="p">]</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">path</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">files</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">allow</span> <span class="mf">10.176.0.0</span><span class="o">/</span><span class="mi">16</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">[</span><span class="n">plugins</span><span class="p">]</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">allow</span> <span class="mf">10.176.0.0</span><span class="o">/</span><span class="mi">16</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">[</span><span class="n">modules</span><span class="p">]</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">allow</span> <span class="mf">10.176.0.0</span><span class="o">/</span><span class="mi">16</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Create the files directory specified above (required to start the puppetmaster service)<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">mkdir</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">files</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Configure your nodes (client) below. The templates will apply to these nodes only.<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">manifests</span><span class="o">/</span><span class="n">nodes</span><span class="p">.</span><span class="n">pp</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">node</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8216</span><span class="p">;</span><span class="n">basenode</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8217</span><span class="p">;</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">include</span> <span class="n">baseclass</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">node</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8216</span><span class="p">;</span><span class="n">mobile101</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8217</span><span class="p">;</span> <span class="n">inherits</span> <span class="n">basenode</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">node</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8216</span><span class="p">;</span><span class="n">mobile102</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8217</span><span class="p">;</span> <span class="n">inherits</span> <span class="n">basenode</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Configure your templates. Here you&#8217;re listing the modules will effect your clients.<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">manifests</span><span class="o">/</span><span class="n">templates</span><span class="p">.</span><span class="n">pp</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">node</span> <span class="k">default</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">include</span> <span class="n">baseclass</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">class</span> <span class="n">baseclass</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">include</span> <span class="n">mobile</span><span class="o">::</span><span class="n">mobile_content</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">include</span> <span class="n">mobile</span><span class="o">::</span><span class="n">mobile_settings</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">include</span> <span class="n">mobile</span><span class="o">::</span><span class="n">mobile_wsgi_app</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">include</span> <span class="n">mobile</span><span class="o">::</span><span class="n">mobile_django</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Edit the site.pp and import your nodes and templates<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">manifests</span><span class="o">/</span><span class="n">site</span><span class="p">.</span><span class="n">pp</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">import</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">nodes</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">import</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">templates</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">filebucket</span> <span class="p">{</span> <span class="n">main</span><span class="o">:</span> <span class="n">server</span> <span class="o">=&gt;</span> <span class="n">puppet</span> <span class="p">}</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Restart puppetmaster to enable the above changes<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">puppetmaster</span> <span class="n">restart</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Configuration: Client</strong><br/>
+There are only a few steps to get the client up and running. First up is the puppet main configuration file. Edit the file below and make changes.<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">puppet</span><span class="p">.</span><span class="n">conf</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="cp"># VERY IMPORTANT&amp;#8230; THE &amp;#8220;SERVER&amp;#8221; VARIABLE MUST BE USING THE HOSTNAME OF THE PUPPETMASTER..NOT AN ALIAS!!&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">[</span><span class="n">main</span><span class="p">]</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">server</span> <span class="o">=</span> <span class="n">puppetmaster</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="p">[</span><span class="n">puppetmasterd</span><span class="p">]</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">templatedir</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">templates</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">[</span><span class="n">agent</span><span class="p">]</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">report</span> <span class="o">=</span> <span class="nb">true</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">listen</span> <span class="o">=</span> <span class="nb">true</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">runinterval</span> <span class="o">=</span> <span class="mi">3600</span> <span class="err">#</span><span class="mi">1</span> <span class="n">hour</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Configure puppet to automatically at boot<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="k">default</span><span class="o">/</span><span class="n">puppet</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">START</span><span class="o">=</span><span class="n">yes</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Create the following required file<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">touch</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">namespaceauth</span><span class="p">.</span><span class="n">conf</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Created the following file if you like to push content manually from the server.<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">auth</span><span class="p">.</span><span class="n">conf</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">path</span> <span class="o">/</span><span class="n">run</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">allow</span> <span class="n">puppetmaster</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>In this example, I&#8217;m using upstart to recycle a service. You&#8217;ll to copy &#8220;upstart.rb&#8221; from the server to client.<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ruby</span><span class="o">/</span><span class="mf">1.8</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">provider</span><span class="o">/</span><span class="n">service</span><span class="o">/&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">scp</span> <span class="n">username</span><span class="p">@</span><span class="n">puppetmaster</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">:/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ruby</span><span class="o">/</span><span class="mf">1.8</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">provider</span><span class="o">/</span><span class="n">service</span><span class="o">/</span><span class="n">upstart</span><span class="p">.</span><span class="n">rb</span> <span class="p">.</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Configuration: Certificate</strong><br/>
+STEP1: On the Client:<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">puppetd</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">server</span> <span class="n">puppetmaster</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">waitforcert</span> <span class="mi">60</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>STEP2: On the Server:<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">puppetca</span> <span class="o">-</span><span class="n">la</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">puppetca</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">sign</span> <span class="n">mobile101</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">puppetca</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">sign</span> <span class="n">mobile102</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>STEP3: On the Client:<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">pkill</span> <span class="n">puppet</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">puppet</span> <span class="n">restart</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>STEP4: Only if necessary: Troubleshooting Certificate Issues:<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">On</span> <span class="n">the</span> <span class="n">server</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">puppetca</span> <span class="o">-</span><span class="n">r</span> <span class="n">mobile101</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">puppetca</span> <span class="o">-</span><span class="n">c</span> <span class="n">mobile101</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">puppetmaster</span> <span class="n">restart</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">On</span> <span class="n">the</span> <span class="n">client</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">pkill</span> <span class="n">puppetd</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">rm</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span> <span class="o">-</span><span class="n">rf</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div><br/>
+Repeat the certificate creation process</p>
+
+<p><strong>Configuration: Modules</strong><br/>
+At this point there are no configuration left on the client. As long as the certificate was configured properly all changes make beyond this point are all on the server. Lets configure a mobile module we included in the configuration above. Lets start off with the required directory structure.<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">mkdir</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">files</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">mkdir</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">modules</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">mkdir</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">mobile</span><span class="o">/&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">mkdir</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">mobile</span><span class="o">/</span><span class="n">files</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">mkdir</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">mobile</span><span class="o">/</span><span class="n">manifests</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>The files directory structure is listed below. In this case we&#8217;re assuming you&#8217;re going to be deploying a website named &#8220;mobile&#8221; with it&#8217;s root/content of &#8220;var/www/mobile&#8221;. You can touch these files for this example.<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">ls</span> <span class="o">-</span><span class="n">m</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">mobile</span><span class="o">/*&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">mobile</span><span class="o">/</span><span class="n">files</span><span class="o">:&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">mobile</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;/</span><span class="n">etc</span><span class="o">/</span><span class="n">puppet</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="n">mobile</span><span class="o">/</span><span class="n">manifests</span><span class="o">:&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">config</span><span class="p">.</span><span class="n">pp</span><span class="p">,</span> <span class="n">init</span><span class="p">.</span><span class="n">pp</span><span class="p">,</span> <span class="n">service</span><span class="p">.</span><span class="n">pp</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Modify the init.pp file<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">class</span> <span class="n">mobile</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">include</span> <span class="n">mobile</span><span class="o">::</span><span class="n">config</span><span class="p">,</span> <span class="n">mobile</span><span class="o">::</span><span class="n">service</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Modify the config.pp file<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">class</span> <span class="n">mobile</span><span class="o">::</span><span class="n">config</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">file</span> <span class="p">{</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">mobile</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">:&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">present</span><span class="p">,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">source</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">puppet</span><span class="o">:</span><span class="c1">///modules/mobile/mobile&amp;#8221;,&lt;br/&gt;</span>
+</span><span class='line'><span class="n">recurse</span> <span class="o">=&gt;</span> <span class="nb">true</span><span class="p">,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">group</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">owner</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">mode</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="mo">0644</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8243</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">file</span> <span class="p">{</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">mobile</span><span class="o">/</span><span class="n">MobileTicketSales</span><span class="o">/</span><span class="n">settings</span><span class="p">.</span><span class="n">py</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">:&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">present</span><span class="p">,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">source</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">puppet</span><span class="o">:</span><span class="c1">///modules/mobile/settings.py&amp;#8221;,&lt;br/&gt;</span>
+</span><span class='line'><span class="n">recurse</span> <span class="o">=&gt;</span> <span class="nb">true</span><span class="p">,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">group</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">owner</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">mode</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="mo">0644</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8243</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">file</span> <span class="p">{</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">mobile</span><span class="o">/</span><span class="n">MobileTicketSales</span><span class="o">/</span><span class="n">wsgi_app</span><span class="p">.</span><span class="n">py</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">:&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">present</span><span class="p">,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">source</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">puppet</span><span class="o">:</span><span class="c1">///modules/mobile/wsgi_app.py&amp;#8221;,&lt;br/&gt;</span>
+</span><span class='line'><span class="n">recurse</span> <span class="o">=&gt;</span> <span class="nb">true</span><span class="p">,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">group</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">owner</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">mode</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="mo">0644</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8243</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">file</span> <span class="p">{</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">mobile</span><span class="o">/</span><span class="n">MobileTicketSales</span><span class="o">/</span><span class="n">django</span><span class="p">.</span><span class="n">wsgi</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">:&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">present</span><span class="p">,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">source</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">puppet</span><span class="o">:</span><span class="c1">///modules/mobile/django.wsgi&amp;#8221;,&lt;br/&gt;</span>
+</span><span class='line'><span class="n">recurse</span> <span class="o">=&gt;</span> <span class="nb">true</span><span class="p">,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">group</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">owner</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">www</span><span class="o">-</span><span class="n">data</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">mode</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="mo">0644</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8243</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Modify the service.pp file<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">class</span> <span class="n">mobile</span><span class="o">::</span><span class="n">service</span> <span class="p">{</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">service</span> <span class="p">{</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">mobile</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">:&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">provider</span> <span class="o">=&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">upstart</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">ensure</span> <span class="o">=&gt;</span> <span class="n">running</span><span class="p">,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">hasstatus</span> <span class="o">=&gt;</span> <span class="nb">true</span><span class="p">,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">hasrestart</span> <span class="o">=&gt;</span> <span class="nb">true</span><span class="p">,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">enable</span> <span class="o">=&gt;</span> <span class="nb">true</span><span class="p">,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">subscribe</span> <span class="o">=&gt;</span> <span class="n">File</span><span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">mobile</span><span class="o">/</span><span class="n">MobileTicketSales</span><span class="o">/</span><span class="n">settings</span><span class="p">.</span><span class="n">py</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;],</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">require</span> <span class="o">=&gt;</span> <span class="kt">Class</span><span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">mobile</span><span class="o">::</span><span class="n">config</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;],</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>That&#8217;s all she wrote. Your clients should retrive any changes hourly (based on configuration above). If you like to push content manually from the server:<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">puppetrun</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">host</span> <span class="n">mobile101</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+</feed>

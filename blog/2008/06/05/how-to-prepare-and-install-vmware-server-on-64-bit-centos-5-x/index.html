@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>How to prepare and install VMware Server on 64-bit CentOS 5.x - reg88.com</title>
+  <meta name="author" content="Mike Moghadas">
+
+  
+  <meta name="description" content="STEP 1.
+# cat /etc/redhat-release
+CentOS release 5 (Final) STEP 2.
+# uname -a
+Linux server.example.com 2.6.18-53.1.21.el5 #1 SMP Tue May 20 09:35:07 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mmoghadas.github.io/blog/2008/06/05/how-to-prepare-and-install-vmware-server-on-64-bit-centos-5-x/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="reg88.com" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div id="logo">
+  	<div id="logoLeft">{</div>
+  	<div id="logoText">mike.moghadas</div>
+  	<div id="logoRight">}</div>
+  	<div class="clear"></div>
+  </div>
+  <h1><a href="/">reg88.com</a></h1>
+  
+    <h2>fine...I&#039;ll blog too</h2>
+  
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mmoghadas.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 class="entry-title">How to Prepare and Install VMware Server on 64-bit CentOS 5.x</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-05T00:00:00-07:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>STEP 1.<br/>
+# cat /etc/redhat-release<br/>
+CentOS release 5 (Final)</p>
+
+<p>STEP 2.<br/>
+# uname -a<br/>
+Linux server.example.com 2.6.18-53.1.21.el5 #1 SMP Tue May 20 09:35:07 EDT 2008 x86_64 x86_64 x86_64 GNU/Linux</p>
+
+<!--more-->
+
+
+<p>STEP 3.<br/>
+make sure you have the following development packages: glibc gcc gcc-c++<br/>
+Install them by running the following:<br/>
+# yum install glibc gcc gcc-c++</p>
+
+<p>STEP 4.<br/>
+Make sure you have kernel, kernel-devel and kernel-headers. All need to be the same version! Pretty much you need to have kernel-devel and kernel-headers packages installed for your kernel listed in step 2.<br/>
+# rpm -qa | grep kernel<br/>
+kernel-devel-2.6.18-53.1.21.el5<br/>
+kernel-2.6.18-53.1.21.el5<br/>
+kernel-headers-2.6.18-53.1.21.el5</p>
+
+<p>If you don&#8217;t have all of above install them by running the following: (note that this will install a most recent packages including the kernel. If you can&#8217;t update the kernel for some reason, install the header and devel packages seperately and can be downloade from centos.org)<br/>
+# yum install kernel kernel-devel kernel-headers</p>
+
+<p>If you install a new kernel, you will need to reboot!</p>
+
+<p>STEP 5.<br/>
+Install other required packages: libXtst-devel, libXrender-devel and xinetd<br/>
+# yum install libXtst-devel libXrender-devel xinetd</p>
+
+<p>Set xinetd to start at boot<br/>
+# chkconfig xinetd on</p>
+
+<p>Start xinetd service<br/>
+# service xinetd start</p>
+
+<p>STEP 6.<br/>
+Download and install VMware Server<br/>
+# mkdir installs<br/>
+# wget <a href="http://vmware-server-location-site/VMware-server-1.0.5-80187.i386.rpm">http://vmware-server-location-site/VMware-server-1.0.5-80187.i386.rpm</a> (or your version)<br/>
+# rpm -ivh VMware-server-1.0.5-80187.i386.rpm</p>
+
+<p>Run the configuration tool and setup based on your preference<br/>
+# vmware-config.pl</p>
+
+<p>STEP 7.<br/>
+You should now be able to connect to the vm server using VMware Server Console from anywhere and on the port you specified during configuration.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Mike Moghadas</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-05T00:00:00-07:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/vmware/'>vmware</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mmoghadas.github.io/blog/2008/06/05/how-to-prepare-and-install-vmware-server-on-64-bit-centos-5-x/" data-via="" data-counturl="http://mmoghadas.github.io/blog/2008/06/05/how-to-prepare-and-install-vmware-server-on-64-bit-centos-5-x/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left articlenav" href="/blog/2008/06/04/request-tracker-rt/" title="Previous Post: Request Tracker: RT">&laquo; Request Tracker: RT</a>
+      
+      
+        <a class="basic-alignment right articlenav" href="/blog/2008/06/06/mark-a-windows-partition-as-active-or-recover-and-reverse-the-change/" title="Next Post: Mark a Windows partition as active or Recover and Reverse the change">Mark a Windows partition as active or Recover and Reverse the change &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/03/01/installing-and-configuring-puppetmaster-and-puppet-clients-on-ubuntu/">Installing and Configuring Puppetmaster and Puppet Clients (on Ubuntu)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/22/how-to-install-homebrew-on-osx-lion/">How to Install Homebrew on OSX Lion</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/01/remote-logging-server-syslog-rsyslog/">Remote Logging Server: Syslog | Rsyslog</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/01/note-to-self-dont-use-scripts-on-blogger/">Note to Self: Don&#8217;t Use Scripts on Blogger!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/01/347/">How to Configure and Install WordPress on Nginx + PHP-FPM</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Mike Moghadas -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

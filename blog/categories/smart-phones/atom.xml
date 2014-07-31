@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: smart phones | reg88.com]]></title>
+  <link href="http://mmoghadas.github.io/blog/categories/smart-phones/atom.xml" rel="self"/>
+  <link href="http://mmoghadas.github.io/"/>
+  <updated>2014-07-31T16:05:25-07:00</updated>
+  <id>http://mmoghadas.github.io/</id>
+  <author>
+    <name><![CDATA[Mike Moghadas]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Blackberry Storm is full of bugs]]></title>
+    <link href="http://mmoghadas.github.io/blog/2008/12/11/blackberry-storm-is-full-of-bugs/"/>
+    <updated>2008-12-11T00:00:00-08:00</updated>
+    <id>http://mmoghadas.github.io/blog/2008/12/11/blackberry-storm-is-full-of-bugs</id>
+    <content type="html"><![CDATA[<p>I purchased the Blackberry Storm (Verizon Wireless) to satisfy my iPhone thirst. Cool device, but after 6 days of use, I&#8217;m all ready to give up and switch!</p>
+
+<p>The Bluetooth stack crashes my Storm!!! I can duplicate the problem on demand and everytime.</p>
+
+<!--more-->
+
+
+<p>The Bluetooth stack has a mind of its own. The bluetooth device and the phone are paired, but when making a call the phone decides to use the headset instead of the bluetooth. I can manually tell the phone to use the bluetooth device after a call in in progress&#8230;. well sometimes.</p>
+
+<p>Also, the phone gets consistent requests from my car&#8217;s bluetooth device and just wont give up. I cancel this request and BOOM. the phone crashes. Attached is the screenshot of what really happens.</p>
+
+<p>&#8220;Uncaught exception: Application net_rim_bb_phone_app (72) is not responding: process terminated&#8221; error followed by missing keys in the keyboard(s) layouts.</p>
+]]></content>
+  </entry>
+  
+</feed>

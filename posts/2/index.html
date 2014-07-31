@@ -1,0 +1,628 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>reg88.com</title>
+  <meta name="author" content="Mike Moghadas">
+
+  
+  <meta name="description" content="I have spent some time looking for a solution to monitor MySQL Replication with no lock. So I decided to figure something out myself rather than &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mmoghadas.github.io/posts/2/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="reg88.com" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div id="logo">
+  	<div id="logoLeft">{</div>
+  	<div id="logoText">mike.moghadas</div>
+  	<div id="logoRight">}</div>
+  	<div class="clear"></div>
+  </div>
+  <h1><a href="/">reg88.com</a></h1>
+  
+    <h2>fine...I&#039;ll blog too</h2>
+  
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mmoghadas.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2011/08/02/how-to-monitor-mysql-replication/">How to Monitor MySQL Replication</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-02T00:00:00-07:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have spent some time looking for a solution to monitor MySQL Replication with no lock. So I decided to figure something out myself rather than wasting more time or end up paying Oracle. Turns out the setup is actually very simple and can be easily setup with few lines of shell script and a monitoring tool that can produce alerts and graphs via SNMP Traps (PRTG in my case).</p>
+
+<p><strong>What do you need?</strong><br/>
+<em>Note: Make sure to update the below addresses</em><br/>
+MySQL Master: 192.168.1.101<br/>
+MySQL Slave: 192.168.1.102<br/>
+SNMP Tools (snmptrap specifically)<br/>
+Monitoring Server (I use PRTG): 192.168.1.116<br/>
+Your shell script<br/>
+A Replication client user must be created on both Master and Slave servers.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/02/how-to-monitor-mysql-replication/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2011/07/19/how-to-get-pl2303-usb-to-serial-driver-to-work-on-mac-os-x-10-7-64bit/">How to Get PL2303 USB to Serial Driver to Work on Mac OS X 10.7 (64bit)</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-19T00:00:00-07:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>What you need</strong><br/>
+File: osx-pl2303.kext.zip<br/>
+Location: <a href="http://sourceforge.net/tracker/index.php?func=detail&#038;aid=2952982&#038;group_id=157692&#038;atid=804837" target="_blank"><a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=2952982&amp;group_id=157692&amp;atid=804837">http://sourceforge.net/tracker/index.php?func=detail&amp;aid=2952982&amp;group_id=157692&amp;atid=804837</a></a></p>
+
+<p><strong>How to get it working</strong><br/>
+1. Download the above driver for your 64bit OSX<br/>
+2. Unpack the driver<br/>
+3. Copy osx-pl2303.kext to /System/Library/Extensions</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">sudo</span> <span class="n">cp</span> <span class="o">-</span><span class="n">r</span> <span class="o">~/</span><span class="n">osx</span><span class="o">-</span><span class="n">pl2303</span><span class="p">.</span><span class="n">kext</span> <span class="o">/</span><span class="n">System</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Extensions</span><span class="o">/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/07/19/how-to-get-pl2303-usb-to-serial-driver-to-work-on-mac-os-x-10-7-64bit/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2011/07/14/upgrading-ubuntu-9-04-to-10-04-lts/">Upgrading Ubuntu 9.04 to 10.04 LTS</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-14T00:00:00-07:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>NOTE: Upgrading directly from 9.04 to 10.04 LTS is not possible. The proper upgrade path is 9.04 > 9.10 > 10.04.</p>
+
+<p><strong>Upgrade 9.04 to 9.10 first</strong><br/>
+1. Download and mount ubuntu-9.10-alternate-i386.iso<br/>
+2. Mount your iso</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">mount</span> <span class="o">-</span><span class="n">o</span> <span class="n">loop</span> <span class="o">~/</span><span class="n">ubuntu</span><span class="o">-</span><span class="mf">9.10</span><span class="o">-</span><span class="n">alternate</span><span class="o">-</span><span class="n">i386</span><span class="p">.</span><span class="n">iso</span> <span class="o">/</span><span class="n">media</span><span class="o">/</span><span class="n">cdrom</span>
+</span><span class='line'><span class="n">mount</span> <span class="o">-</span><span class="n">o</span> <span class="n">loop</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">cdrom</span> <span class="o">/</span><span class="n">media</span><span class="o">/</span><span class="n">cdrom</span> <span class="p">(</span><span class="k">if</span> <span class="n">your</span> <span class="n">burned</span> <span class="n">your</span> <span class="n">iso</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/07/14/upgrading-ubuntu-9-04-to-10-04-lts/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2011/07/14/installing-packages-on-an-out-of-support-ubuntu-9-04/">Installing Packages on an Out-of-support Ubuntu 9.04</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-14T00:00:00-07:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>By now your 9.04 (Jaunty) is out of support and at some point you might want to install a package from Ubuntu repositories. You will need need to tweak a few things before you can install or upgrade your packages. Here&#8217;s an easy way to this:</p>
+
+<p><strong>Edit and update where Ubuntu gets it&#8217;s packages from</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">sudo</span> <span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="p">.</span><span class="n">list</span>
+</span><span class='line'><span class="o">:%</span><span class="n">s</span><span class="o">/</span><span class="n">us</span><span class="p">.</span><span class="n">archive</span><span class="p">.</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">old</span><span class="o">-</span><span class="n">releases</span><span class="p">.</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">g</span>
+</span><span class='line'><span class="o">:%</span><span class="n">s</span><span class="o">/</span><span class="n">security</span><span class="p">.</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">old</span><span class="o">-</span><span class="n">releases</span><span class="p">.</span><span class="n">ubuntu</span><span class="o">/</span><span class="n">g</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Update and resynchronize the package indexes</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you should be able to install or upgrade packages</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2011/07/13/fresh-installation-of-bugzilla-on-ubuntu/">Fresh Installation of Bugzilla on Ubuntu</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-13T00:00:00-07:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>Install required packages</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">perl</span> <span class="n">mysql</span><span class="o">-</span><span class="n">server</span> <span class="n">mysql</span><span class="o">-</span><span class="n">client</span> <span class="n">mysql</span><span class="o">-</span><span class="n">admin</span> <span class="n">apache2</span>
+</span><span class='line'><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span> <span class="n">libcgi</span><span class="o">-</span><span class="n">pm</span><span class="o">-</span><span class="n">perl</span> <span class="n">libdigest</span><span class="o">-</span><span class="n">sha1</span><span class="o">-</span><span class="n">perl</span> <span class="n">timedate</span> <span class="n">libdatetime</span><span class="o">-</span><span class="n">event</span><span class="o">-</span><span class="n">sunrise</span><span class="o">-</span><span class="n">perl</span> <span class="n">libdbi</span><span class="o">-</span><span class="n">perl</span> <span class="n">libhtml</span><span class="o">-</span><span class="n">template</span><span class="o">-</span><span class="n">perl</span> <span class="n">libemail</span><span class="o">-</span><span class="n">send</span><span class="o">-</span><span class="n">perl</span> <span class="n">libemail</span><span class="o">-</span><span class="n">mime</span><span class="o">-</span><span class="n">perl</span> <span class="n">libemail</span><span class="o">-</span><span class="n">mime</span><span class="o">-</span><span class="n">encodings</span><span class="o">-</span><span class="n">perl</span> <span class="n">libemail</span><span class="o">-</span><span class="n">mime</span><span class="o">-</span><span class="n">modifier</span><span class="o">-</span><span class="n">perl</span> <span class="n">liburi</span><span class="o">-</span><span class="n">perl</span> <span class="n">libdbd</span><span class="o">-</span><span class="n">mysql</span><span class="o">-</span><span class="n">perl</span> <span class="n">libtoolkit</span><span class="o">-</span><span class="n">perl</span> <span class="n">libtemplate</span><span class="o">-</span><span class="n">perl</span> <span class="n">libgd</span><span class="o">-</span><span class="n">gd2</span><span class="o">-</span><span class="n">perl</span> <span class="n">libchart</span><span class="o">-</span><span class="n">perl</span> <span class="n">libtemplate</span><span class="o">-</span><span class="n">plugin</span><span class="o">-</span><span class="n">gd</span><span class="o">-</span><span class="n">perl</span> <span class="n">libxml</span><span class="o">-</span><span class="n">twig</span><span class="o">-</span><span class="n">perl</span> <span class="n">libmime</span><span class="o">-</span><span class="n">tools</span><span class="o">-</span><span class="n">perl</span> <span class="n">libwww</span><span class="o">-</span><span class="n">perl</span> <span class="n">perlmagick</span> <span class="n">libnet</span><span class="o">-</span><span class="n">ldap</span><span class="o">-</span><span class="n">perl</span> <span class="n">libauthen</span><span class="o">-</span><span class="n">sasl</span><span class="o">-</span><span class="n">perl</span> <span class="n">libauthen</span><span class="o">-</span><span class="n">simple</span><span class="o">-</span><span class="n">radius</span><span class="o">-</span><span class="n">perl</span> <span class="n">libsoap</span><span class="o">-</span><span class="n">lite</span><span class="o">-</span><span class="n">perl</span> <span class="n">libhtml</span><span class="o">-</span><span class="n">parser</span><span class="o">-</span><span class="n">perl</span> <span class="n">libhtml</span><span class="o">-</span><span class="n">scrubber</span><span class="o">-</span><span class="n">perl</span> <span class="n">libtheschwartz</span><span class="o">-</span><span class="n">perl</span> <span class="n">libapache2</span><span class="o">-</span><span class="n">mod</span><span class="o">-</span><span class="n">perl2</span> <span class="n">libfile</span><span class="o">-</span><span class="n">slurp</span><span class="o">-</span><span class="n">perl</span> <span class="n">libfile</span><span class="o">-</span><span class="n">flock</span><span class="o">-</span><span class="n">perl</span> <span class="n">libyaml</span><span class="o">-</span><span class="n">perl</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/07/13/fresh-installation-of-bugzilla-on-ubuntu/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2011/07/12/upgraded-my-mac-to-8gb-ram-first-gen-unibody-with-removable-battery/">Upgraded My Mac to 8GB RAM (First Gen Unibody With Removable Battery)</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-12T00:00:00-07:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>While not exactly supported by Apple the &#8220;13-inch, Aluminum, Late 2008&#8243; version of the MacBook (Renamed to MacBook Pro) supports 8GB of Memory.</p>
+
+<p>Originally purchased this Mac with 2GB RAM and Upgraded it to 4GB on day one. Had I known more memory was supported (officially or unofficially) my laptop would have been rocking more RAM much sooner.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2011/07/10/used-osx-10-7-lion-for-12-hours-and-the-verdict-is-meh/">Used OSX 10.7 Lion for 12 Hours and the Verdict Is: Meh :(</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-10T00:00:00-07:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2011/07/10/nook-color-with-gingerbread/">Nook Color With Gingerbread</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-10T00:00:00-07:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>Requirements</strong><br/>
+Hardware<br/>
+1. Nook Color [Purchase: <a href="http://www.barnesandnoble.com/nookcolor/index.asp">http://www.barnesandnoble.com/nookcolor/index.asp</a>]<br/>
+2. SD Card [Purchase: <a href="http://www.amazon.com/Transcend-Class-Flash-Memory-TS16GSDHC10E/dp/B003VNKNEQ/ref=sr_1_3?ie=UTF8&amp;qid=1310314654&amp;sr=8-3">http://www.amazon.com/Transcend-Class-Flash-Memory-TS16GSDHC10E/dp/B003VNKNEQ/ref=sr_1_3?ie=UTF8&amp;qid=1310314654&amp;sr=8-3</a>]</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/07/10/nook-color-with-gingerbread/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2011/07/09/new-discovery-with-lion-parallels-5-will-not-work-i-finally-had-to-upgrade-to-parallels-6-to-get-access-to-my-bootcamp-and-vms/">New Discovery With Lion&#8230; Parallels 5 Will Not Work! I Finally Had to Upgrade to Parallels 6 to Get Access to My BootCamp and VMs.</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-09T00:00:00-07:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <!-- Now we're back to normal posts. Note the links used under href in both headers.-->
+        <h1 class="entry-title"><a href="/blog/2011/07/09/i-have-some-adjusting-to-do-with-osx-lion-got-the-new-gestures-down-but-my-favorite-2-are-missing-from-this-version-of-the-operation-system/">I Have Some Adjusting to Do With OSX Lion. Got the New Gestures Down, but My Favorite 2 Are Missing From This Version of the Operation System :(</a></h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-09T00:00:00-07:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="3">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="1">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/03/01/installing-and-configuring-puppetmaster-and-puppet-clients-on-ubuntu/">Installing and Configuring Puppetmaster and Puppet Clients (on Ubuntu)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/22/how-to-install-homebrew-on-osx-lion/">How to Install Homebrew on OSX Lion</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/01/remote-logging-server-syslog-rsyslog/">Remote Logging Server: Syslog | Rsyslog</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/01/note-to-self-dont-use-scripts-on-blogger/">Note to Self: Don&#8217;t Use Scripts on Blogger!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/01/347/">How to Configure and Install WordPress on Nginx + PHP-FPM</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Mike Moghadas -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: vmware | reg88.com]]></title>
+  <link href="http://mmoghadas.github.io/blog/categories/vmware/atom.xml" rel="self"/>
+  <link href="http://mmoghadas.github.io/"/>
+  <updated>2014-07-31T16:05:25-07:00</updated>
+  <id>http://mmoghadas.github.io/</id>
+  <author>
+    <name><![CDATA[Mike Moghadas]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Updating VMware ESXI 5.0 with latest patches]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/12/27/updating-vmware-esxi-5-0-with-latest-patches/"/>
+    <updated>2011-12-27T00:00:00-08:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/12/27/updating-vmware-esxi-5-0-with-latest-patches</id>
+    <content type="html"><![CDATA[<p>VMware was nice enough to remove the pretty &#8220;GUI&#8221; Update Utility after ESXi version 4.1.  So now you&#8217;ll need to do bunch of commands to get your VMware Host Updated.  Here&#8217;s how:</p>
+
+<p><strong>What you&#8217;ll need</strong><br/>
+1. Install VMware CLI on your machine. Once this tool is installed the required utilities are located in &#8220;<strong>C:Program Files (x86)VMwareVMware vSphere CLIbin</strong>&#8220;.  Add this location to your PATH to make life easier. (The below instructions assume you&#8217;ve done this)</p>
+
+<!--more-->
+
+
+<ol>
+<li><p>ESXi Patch you want to apply downloaded from VMware</p></li>
+<li><p>SSH Enabled on the ESXi Host(s)<br/>
+<strong>How to Patch things up </strong></p></li>
+<li><p>Copy your patch to the ESXi Host.  You can use scp/ssh to do this<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">scp</span> <span class="n">ESXi500</span><span class="o">-</span><span class="mf">201111001.</span><span class="n">zip</span> <span class="n">root</span><span class="mf">@10.10.10.206</span><span class="o">:/</span><span class="n">vmfs</span><span class="o">/</span><span class="n">volumes</span><span class="o">/</span><span class="n">datastore1</span><span class="o">/</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+<li>Force your EXSi to enter Maintenance Mode<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">vicfg</span><span class="o">-</span><span class="n">hostops</span><span class="p">.</span><span class="n">pl</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">server</span><span class="o">=</span><span class="mf">10.10.10.206</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">username</span><span class="o">=</span><span class="n">root</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">password</span><span class="o">=*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">operation</span> <span class="n">enter</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>Verify Maintenance Mode<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">vicfg</span><span class="o">-</span><span class="n">hostops</span><span class="p">.</span><span class="n">pl</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">server</span><span class="o">=</span><span class="mf">10.10.10.206</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">username</span><span class="o">=</span><span class="n">root</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">password</span><span class="o">=*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">operation</span> <span class="n">info</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div><br/>
+&#8211;OR&#8211;<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">vicfg</span><span class="o">-</span><span class="n">hostops</span><span class="p">.</span><span class="n">pl</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">server</span><span class="o">=</span><span class="mf">10.10.10.206</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">username</span><span class="o">=</span><span class="n">root</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">password</span><span class="o">=*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">operation</span> <span class="n">info</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">In</span> <span class="n">Maintenance</span> <span class="n">Mode</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>Update VM Host with your new patches<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">esxcli</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">server</span><span class="o">=</span><span class="mf">10.10.10.206</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">username</span><span class="o">=</span><span class="n">root</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">password</span><span class="o">=*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="n">software</span> <span class="n">vib</span> <span class="n">update</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">depot</span><span class="o">=/</span><span class="n">vmfs</span><span class="o">/</span><span class="n">volumes</span><span class="o">/</span><span class="n">datastore1</span><span class="o">/</span><span class="n">ESXi500</span><span class="o">-</span><span class="mf">201111001.</span><span class="n">zip</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>Reboot VM Host<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">vicfg</span><span class="o">-</span><span class="n">hostops</span><span class="p">.</span><span class="n">pl</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">server</span><span class="o">=</span><span class="mf">10.10.10.206</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">username</span><span class="o">=</span><span class="n">root</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">password</span><span class="o">=*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">operation</span> <span class="n">reboot</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>Exit Maintenance Mode<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'> <span class="n">vicfg</span><span class="o">-</span><span class="n">hostops</span><span class="p">.</span><span class="n">pl</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">server</span><span class="o">=</span><span class="mf">10.10.10.206</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">username</span><span class="o">=</span><span class="n">root</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">password</span><span class="o">=*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">operation</span> <span class="n">exit</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to prepare and install VMware Server on 64-bit CentOS 5.x]]></title>
+    <link href="http://mmoghadas.github.io/blog/2008/06/05/how-to-prepare-and-install-vmware-server-on-64-bit-centos-5-x/"/>
+    <updated>2008-06-05T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2008/06/05/how-to-prepare-and-install-vmware-server-on-64-bit-centos-5-x</id>
+    <content type="html"><![CDATA[<p>STEP 1.<br/>
+# cat /etc/redhat-release<br/>
+CentOS release 5 (Final)</p>
+
+<p>STEP 2.<br/>
+# uname -a<br/>
+Linux server.example.com 2.6.18-53.1.21.el5 #1 SMP Tue May 20 09:35:07 EDT 2008 x86_64 x86_64 x86_64 GNU/Linux</p>
+
+<!--more-->
+
+
+<p>STEP 3.<br/>
+make sure you have the following development packages: glibc gcc gcc-c++<br/>
+Install them by running the following:<br/>
+# yum install glibc gcc gcc-c++</p>
+
+<p>STEP 4.<br/>
+Make sure you have kernel, kernel-devel and kernel-headers. All need to be the same version! Pretty much you need to have kernel-devel and kernel-headers packages installed for your kernel listed in step 2.<br/>
+# rpm -qa | grep kernel<br/>
+kernel-devel-2.6.18-53.1.21.el5<br/>
+kernel-2.6.18-53.1.21.el5<br/>
+kernel-headers-2.6.18-53.1.21.el5</p>
+
+<p>If you don&#8217;t have all of above install them by running the following: (note that this will install a most recent packages including the kernel. If you can&#8217;t update the kernel for some reason, install the header and devel packages seperately and can be downloade from centos.org)<br/>
+# yum install kernel kernel-devel kernel-headers</p>
+
+<p>If you install a new kernel, you will need to reboot!</p>
+
+<p>STEP 5.<br/>
+Install other required packages: libXtst-devel, libXrender-devel and xinetd<br/>
+# yum install libXtst-devel libXrender-devel xinetd</p>
+
+<p>Set xinetd to start at boot<br/>
+# chkconfig xinetd on</p>
+
+<p>Start xinetd service<br/>
+# service xinetd start</p>
+
+<p>STEP 6.<br/>
+Download and install VMware Server<br/>
+# mkdir installs<br/>
+# wget <a href="http://vmware-server-location-site/VMware-server-1.0.5-80187.i386.rpm">http://vmware-server-location-site/VMware-server-1.0.5-80187.i386.rpm</a> (or your version)<br/>
+# rpm -ivh VMware-server-1.0.5-80187.i386.rpm</p>
+
+<p>Run the configuration tool and setup based on your preference<br/>
+# vmware-config.pl</p>
+
+<p>STEP 7.<br/>
+You should now be able to connect to the vm server using VMware Server Console from anywhere and on the port you specified during configuration.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: osx | reg88.com]]></title>
+  <link href="http://mmoghadas.github.io/blog/categories/osx/atom.xml" rel="self"/>
+  <link href="http://mmoghadas.github.io/"/>
+  <updated>2014-07-31T16:05:25-07:00</updated>
+  <id>http://mmoghadas.github.io/</id>
+  <author>
+    <name><![CDATA[Mike Moghadas]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to get PL2303 USB to Serial Driver to work on Mac OS X 10.7 (64bit)]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/07/19/how-to-get-pl2303-usb-to-serial-driver-to-work-on-mac-os-x-10-7-64bit/"/>
+    <updated>2011-07-19T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/07/19/how-to-get-pl2303-usb-to-serial-driver-to-work-on-mac-os-x-10-7-64bit</id>
+    <content type="html"><![CDATA[<p><strong>What you need</strong><br/>
+File: osx-pl2303.kext.zip<br/>
+Location: <a href="http://sourceforge.net/tracker/index.php?func=detail&#038;aid=2952982&#038;group_id=157692&#038;atid=804837" target="_blank"><a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=2952982&amp;group_id=157692&amp;atid=804837">http://sourceforge.net/tracker/index.php?func=detail&amp;aid=2952982&amp;group_id=157692&amp;atid=804837</a></a></p>
+
+<p><strong>How to get it working</strong><br/>
+1. Download the above driver for your 64bit OSX<br/>
+2. Unpack the driver<br/>
+3. Copy osx-pl2303.kext to /System/Library/Extensions<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">sudo</span> <span class="n">cp</span> <span class="o">-</span><span class="n">r</span> <span class="o">~/</span><span class="n">osx</span><span class="o">-</span><span class="n">pl2303</span><span class="p">.</span><span class="n">kext</span> <span class="o">/</span><span class="n">System</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Extensions</span><span class="o">/&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<!--more-->
+
+
+<ol>
+<li><p>Load the driver<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">sudo</span> <span class="n">kextload</span> <span class="o">/</span><span class="n">System</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Extensions</span><span class="o">/</span><span class="n">osx</span><span class="o">-</span><span class="n">pl2303</span><span class="p">.</span><span class="n">kext</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p></li>
+<li><p>Plug your USB-to-Serial in</p></li>
+<li>Test<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">cu</span><span class="p">.</span><span class="n">PL2303</span><span class="o">-&lt;</span><span class="n">em</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">or</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">tty</span><span class="p">.</span><span class="n">PL2303</span><span class="o">-&lt;/</span><span class="n">em</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>If you see a device with above name, you have installed your driver successfully</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Upgraded my Mac to 8GB RAM (First Gen Unibody with Removable Battery)]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/07/12/upgraded-my-mac-to-8gb-ram-first-gen-unibody-with-removable-battery/"/>
+    <updated>2011-07-12T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/07/12/upgraded-my-mac-to-8gb-ram-first-gen-unibody-with-removable-battery</id>
+    <content type="html"><![CDATA[<p>While not exactly supported by Apple the &#8220;13-inch, Aluminum, Late 2008&#8243; version of the MacBook (Renamed to MacBook Pro) supports 8GB of Memory.</p>
+
+<p>Originally purchased this Mac with 2GB RAM and Upgraded it to 4GB on day one. Had I known more memory was supported (officially or unofficially) my laptop would have been rocking more RAM much sooner.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Used OSX 10.7 Lion for 12 hours and the verdict is: Meh :(]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/07/10/used-osx-10-7-lion-for-12-hours-and-the-verdict-is-meh/"/>
+    <updated>2011-07-10T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/07/10/used-osx-10-7-lion-for-12-hours-and-the-verdict-is-meh</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[New discovery with Lion&#8230; Parallels 5 will not work! I finally had to upgrade to Parallels 6 to get access to my BootCamp and VMs.]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/07/09/new-discovery-with-lion-parallels-5-will-not-work-i-finally-had-to-upgrade-to-parallels-6-to-get-access-to-my-bootcamp-and-vms/"/>
+    <updated>2011-07-09T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/07/09/new-discovery-with-lion-parallels-5-will-not-work-i-finally-had-to-upgrade-to-parallels-6-to-get-access-to-my-bootcamp-and-vms</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[I have some adjusting to do with OSX Lion. Got the new gestures down, but my favorite 2 are missing from this version of the Operation System :(]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/07/09/i-have-some-adjusting-to-do-with-osx-lion-got-the-new-gestures-down-but-my-favorite-2-are-missing-from-this-version-of-the-operation-system/"/>
+    <updated>2011-07-09T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/07/09/i-have-some-adjusting-to-do-with-osx-lion-got-the-new-gestures-down-but-my-favorite-2-are-missing-from-this-version-of-the-operation-system</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+</feed>

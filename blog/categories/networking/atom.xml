@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: networking | reg88.com]]></title>
+  <link href="http://mmoghadas.github.io/blog/categories/networking/atom.xml" rel="self"/>
+  <link href="http://mmoghadas.github.io/"/>
+  <updated>2014-07-31T16:05:25-07:00</updated>
+  <id>http://mmoghadas.github.io/</id>
+  <author>
+    <name><![CDATA[Mike Moghadas]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Configure Cisco WebVPN to use a Signed Certificate]]></title>
+    <link href="http://mmoghadas.github.io/blog/2012/01/18/configure-cisco-webvpn-to-use-a-signed-certificate/"/>
+    <updated>2012-01-18T00:00:00-08:00</updated>
+    <id>http://mmoghadas.github.io/blog/2012/01/18/configure-cisco-webvpn-to-use-a-signed-certificate</id>
+    <content type="html"><![CDATA[<p>If you like to install a Signed Certificate on your cisco Router&#8230;</p>
+
+<ol>
+<li>Create a new CSR on Test IIS Server</li>
+<li>Submit CSR to CA</li>
+<li>Once Signed/Generated, download the newly generated PKCS12 certificate and import to IIS</li>
+<li>Export the new certificate via MMC<br/>
+<em>      &#8211; Export </em>.example.com certificate from “Personal Certificate” with key<em><br/>
+</em>      &#8211; Include all certificates in the path (CA, Intermediate)*</li>
+<li>Place the exported .pfx file onto a tftp server</li>
+<li>On the Cisco Router:</li>
+</ol>
+
+
+<!--more-->
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">crypto</span> <span class="n">pki</span> <span class="n">import</span> <span class="n">ExampleWildcard</span><span class="o">-</span><span class="n">Crt</span> <span class="n">pkcs12</span> <span class="n">t</span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;ftp://10.10.10.65/certificate_file  &quot;</span><span class="o">&gt;</span><span class="n">ftp</span><span class="o">:</span><span class="c1">//10.10.10.65/certificate_file  &lt;/a&gt;</span>
+</span><span class='line'><span class="o">!</span><span class="n">Yes</span> <span class="n">to</span> <span class="n">all</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Updated the WebVPN configuration to use the new certificate:<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">webvpn</span> <span class="n">gateway</span> <span class="n">VTX</span><span class="o">-</span><span class="n">Admins</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">ssl</span> <span class="n">trustpoint</span> <span class="n">ExampleWildcard</span><span class="o">-</span><span class="n">Crt</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Disable FWSM Module Cisco 6500]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/01/07/disable-fwsm-module-cisco-6500/"/>
+    <updated>2011-01-07T00:00:00-08:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/01/07/disable-fwsm-module-cisco-6500</id>
+    <content type="html"><![CDATA[<p><strong>To disable the FWSM Module on a Cisco 6500:</strong></p>
+
+<p>Logon to Router<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">enable</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">hw</span><span class="o">-</span><span class="n">module</span> <span class="n">module</span> <span class="mi">1</span> <span class="n">shutdown</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">sh</span> <span class="n">hw</span><span class="o">-</span><span class="n">module</span> <span class="n">slot</span> <span class="mi">1</span> <span class="n">tech</span><span class="o">-</span><span class="n">support</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[F5 Log shipping to syslog server]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/01/04/f5-log-shipping-to-syslog-server/"/>
+    <updated>2011-01-04T00:00:00-08:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/01/04/f5-log-shipping-to-syslog-server</id>
+    <content type="html"><![CDATA[<p><strong>To send a copy of your logs to a central log server from your F5:</strong></p>
+
+<p>Logon to CLI and Issue the following commands<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">bigpipe</span> <span class="n">syslog</span> <span class="n">remote</span> <span class="n">server</span> <span class="p">{</span><span class="n">logs101</span> <span class="p">{</span><span class="n">host</span> <span class="mf">10.10.10.99</span><span class="p">}</span> <span class="p">}</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">bigpipe</span> <span class="n">save</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Configure Linux server behind F5 Loadbalancer]]></title>
+    <link href="http://mmoghadas.github.io/blog/2010/03/17/configure-linux-server-behind-f5-loadbalancer/"/>
+    <updated>2010-03-17T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2010/03/17/configure-linux-server-behind-f5-loadbalancer</id>
+    <content type="html"><![CDATA[<p>Adding Networking: VLANS, ROUTES AND ROUTE DOMAINS<br/>
+Create VLAN<br/>
+Name: VLAN160-net1-0<br/>
+Tag: 160<br/>
+Interfaces: Trunk-1</p>
+
+<p>Create Route Domain<br/>
+ID: 160<br/>
+VLANs: VLAN160-net1-0</p>
+
+<!--more-->
+
+
+<p>Create Self IP address(s)<br/>
+Self IPs > Create<br/>
+IP Addres: 10.176.160.30%160<br/>
+Netmask: 255.255.255.0<br/>
+VLAN: VLAN160-net1-0</p>
+
+<p>Self IPs > Create<br/>
+IP Addres: 10.176.160.40%160<br/>
+Netmask: 255.255.255.0<br/>
+VLAN: VLAN160-net1-0<br/>
+Floating IP: CHECK</p>
+
+<p>Create Routes<br/>
+Route Domain ID: 160<br/>
+Gateway Address: 10.176.160.1%160</p>
+
+<p>Adding Virtual Server (LB101) for the servers</p>
+
+<p>Create Monitor<br/>
+Name: MON-NET-8080<br/>
+Type: TCP<br/>
+Service Port: 8080</p>
+
+<p>Create a new Node<br/>
+Local Traffic > Nodes > Create<br/>
+Address: 10.176.160.103%160<br/>
+Name: NETAPP101<br/>
+Health Monitors > Node Specific > icmp<br/>
+Repeat for NETAPP102(10.176.160.104%160)</p>
+
+<p>Create a new Pool<br/>
+Local Traffic > Pools > Create<br/>
+Name: POOL-NET<br/>
+Health Monitors: gateway_icmp, MON-NET-8080<br/>
+Action on Service Down: Reselect<br/>
+Load Balancing Method: Round Robin<br/>
+Members: NETAPP101, NETAPP102<br/>
+Service Port: 8080</p>
+
+<p>Create a Profile<br/>
+Local Traffic > Profiles > Protocols > FastL4 > Create<br/>
+Name: NET-FastL4<br/>
+Custom > Loose Close > Enabled</p>
+
+<p>Create a new Virtual Server<br/>
+Local Traffic > Virtual Servers > Create<br/>
+Name: VS-NET-SSL<br/>
+Destination: Host/10.176.160.51%160<br/>
+Service Port: 8080<br/>
+Type: Performance (Layer4)<br/>
+Protocol: TCP<br/>
+Protocol Profile (Client): NET-FastL4<br/>
+VLAN Traffic: VLAN160-net1-0<br/>
+Address Translation: Disabled<br/>
+Port Translation: Disabled<br/>
+SNAT Pool: NONE<br/>
+Default Pool: POOL-NET</p>
+
+<p>ON NETAPP101 and NETAPP102</p>
+
+<p># This is required to get this ports to work with load balancer<br/>
+# iptables -t nat -A PREROUTING -d LOADBALANCEADDRESSHERE -j DNAT &#8211;to-dest SERVERADDRESSHERE<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="err">$</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">t</span> <span class="n">nat</span> <span class="o">-</span><span class="n">A</span> <span class="n">PREROUTING</span> <span class="o">-</span><span class="n">d</span> <span class="mf">10.176.160.51</span> <span class="o">-</span><span class="n">j</span> <span class="n">DNAT</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">to</span><span class="o">-</span><span class="n">dest</span> <span class="mf">10.176.160.103</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p># Save config to file<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">iptables</span> <span class="n">save</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p># List the newly created NAT rule<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="err">$</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">t</span> <span class="n">nat</span> <span class="o">-</span><span class="n">L</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[F5 Certificate Import Process]]></title>
+    <link href="http://mmoghadas.github.io/blog/2010/02/10/f5-certificate-import-process/"/>
+    <updated>2010-02-10T00:00:00-08:00</updated>
+    <id>http://mmoghadas.github.io/blog/2010/02/10/f5-certificate-import-process</id>
+    <content type="html"><![CDATA[<p>Note: This is assuming you currently have a valid certificate installed on some IIS Server</p>
+
+<ol>
+<li><p>Export example.com certificate via IIS to PFX. Make sure to include the certificate and the private key. If exporting a bundled certificate, you will need to copy/paste the example.com certificate below only</p></li>
+<li><p>Convert PFX to PEM</p></li>
+</ol>
+
+
+<!--more-->
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">openssl</span> <span class="n">pkcs12</span> <span class="o">-</span><span class="k">in</span> <span class="n">example_all</span><span class="p">.</span><span class="n">pfx</span> <span class="o">-</span><span class="n">out</span> <span class="n">example_all_pem</span><span class="p">.</span><span class="n">cer</span> <span class="err">–</span><span class="n">nodes</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<ol>
+<li><p>Import Cert via PEM to f5<br/>
+Local Traffic > SSL Certificates > Import<br/>
+Import Type: Certificate<br/>
+Certificate Name: Cert-Star-ExampleCom<br/>
+Upload File: Generated Above</p></li>
+<li><p>Import Key via PEM to f5<br/>
+Local Traffic > SSL Certificates > Cert-Star-ExampleCom<br/>
+Key > Import: Generated Abov</p></li>
+<li><p>Create new SSL Profile<br/>
+Local Traffic > Profiles > SSL > Client > Create<br/>
+Name: SSL-ExampleCom<br/>
+Certificate: Cert-Star-ExampleCom<br/>
+Key: Cert-Star-ExampleCom</p></li>
+<li><p>Update VirtualServer to use the new SSL Profile (Client SSL)</p></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: blog | reg88.com]]></title>
+  <link href="http://mmoghadas.github.io/blog/categories/blog/atom.xml" rel="self"/>
+  <link href="http://mmoghadas.github.io/"/>
+  <updated>2014-07-31T16:05:25-07:00</updated>
+  <id>http://mmoghadas.github.io/</id>
+  <author>
+    <name><![CDATA[Mike Moghadas]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Note to Self: Don&#8217;t use scripts on blogger!]]></title>
+    <link href="http://mmoghadas.github.io/blog/2012/02/01/note-to-self-dont-use-scripts-on-blogger/"/>
+    <updated>2012-02-01T00:00:00-08:00</updated>
+    <id>http://mmoghadas.github.io/blog/2012/02/01/note-to-self-dont-use-scripts-on-blogger</id>
+    <content type="html"><![CDATA[<p>I recently migrated my blog from Blogger to WordPress. I added a simple redirect to the old blog (Blogger) to forward to my new blog. Two hours later&#8230;</p>
+
+<ul>
+<li>my Google account was locked!</li>
+<li>my Blogger blog was DELETED!</li>
+</ul>
+
+
+<p>Fortunately, I was able to recover my account and I had already backed up my blogger content.</p>
+]]></content>
+  </entry>
+  
+</feed>

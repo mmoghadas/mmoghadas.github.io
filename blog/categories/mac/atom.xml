@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mac | reg88.com]]></title>
+  <link href="http://mmoghadas.github.io/blog/categories/mac/atom.xml" rel="self"/>
+  <link href="http://mmoghadas.github.io/"/>
+  <updated>2014-07-31T16:05:25-07:00</updated>
+  <id>http://mmoghadas.github.io/</id>
+  <author>
+    <name><![CDATA[Mike Moghadas]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to install Homebrew on OSX Lion]]></title>
+    <link href="http://mmoghadas.github.io/blog/2012/02/22/how-to-install-homebrew-on-osx-lion/"/>
+    <updated>2012-02-22T00:00:00-08:00</updated>
+    <id>http://mmoghadas.github.io/blog/2012/02/22/how-to-install-homebrew-on-osx-lion</id>
+    <content type="html"><![CDATA[<p>Homebrew is a tool that allow you to install some missing open-source packages in OSX. This of Homebrew as apt-get for OSX.  It&#8217;s also an alternative to Port, but I think this just works better.</p>
+
+<p>Assuming you&#8217;re installing Homebrew on OSX Lion, you&#8217;ll need the following:</p>
+
+<ul>
+<li>OSX Lion<br/>
+- Xcode (Can be installed via AppStore)<br/>
+- Xcode Command Line Tools (You&#8217;ll need an Apple Developers Account)</li>
+</ul>
+
+
+<!--more-->
+
+
+<p><strong>To install Xcode Command Line Tools</strong><br/>
+Launch Xcode > Preferences > Downloads > Command Line Tools > Install</p>
+
+<p><strong>To install Homebrew</strong><br/>
+From Terminal<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">ruby</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="err">$</span><span class="p">(</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">curl</span> <span class="o">-</span><span class="n">fksSL</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;https://raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb&quot;</span><span class="o">&gt;</span><span class="n">https</span><span class="o">:</span><span class="c1">//raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb&lt;/a&gt;)&amp;#8221;&lt;br/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>Now you should be able to install available Unix Tools.<br/>
+<strong>To install packages</strong><br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">brew</span> <span class="n">install</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">tool_name</span><span class="o">&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">brew</span> <span class="n">install</span> <span class="n">git</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Upgraded my Mac to 8GB RAM (First Gen Unibody with Removable Battery)]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/07/12/upgraded-my-mac-to-8gb-ram-first-gen-unibody-with-removable-battery/"/>
+    <updated>2011-07-12T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/07/12/upgraded-my-mac-to-8gb-ram-first-gen-unibody-with-removable-battery</id>
+    <content type="html"><![CDATA[<p>While not exactly supported by Apple the &#8220;13-inch, Aluminum, Late 2008&#8243; version of the MacBook (Renamed to MacBook Pro) supports 8GB of Memory.</p>
+
+<p>Originally purchased this Mac with 2GB RAM and Upgraded it to 4GB on day one. Had I known more memory was supported (officially or unofficially) my laptop would have been rocking more RAM much sooner.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Used OSX 10.7 Lion for 12 hours and the verdict is: Meh :(]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/07/10/used-osx-10-7-lion-for-12-hours-and-the-verdict-is-meh/"/>
+    <updated>2011-07-10T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/07/10/used-osx-10-7-lion-for-12-hours-and-the-verdict-is-meh</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[New discovery with Lion&#8230; Parallels 5 will not work! I finally had to upgrade to Parallels 6 to get access to my BootCamp and VMs.]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/07/09/new-discovery-with-lion-parallels-5-will-not-work-i-finally-had-to-upgrade-to-parallels-6-to-get-access-to-my-bootcamp-and-vms/"/>
+    <updated>2011-07-09T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/07/09/new-discovery-with-lion-parallels-5-will-not-work-i-finally-had-to-upgrade-to-parallels-6-to-get-access-to-my-bootcamp-and-vms</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[I have some adjusting to do with OSX Lion. Got the new gestures down, but my favorite 2 are missing from this version of the Operation System :(]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/07/09/i-have-some-adjusting-to-do-with-osx-lion-got-the-new-gestures-down-but-my-favorite-2-are-missing-from-this-version-of-the-operation-system/"/>
+    <updated>2011-07-09T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/07/09/i-have-some-adjusting-to-do-with-osx-lion-got-the-new-gestures-down-but-my-favorite-2-are-missing-from-this-version-of-the-operation-system</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+</feed>

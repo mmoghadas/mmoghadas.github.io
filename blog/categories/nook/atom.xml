@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: nook | reg88.com]]></title>
+  <link href="http://mmoghadas.github.io/blog/categories/nook/atom.xml" rel="self"/>
+  <link href="http://mmoghadas.github.io/"/>
+  <updated>2014-07-31T16:05:25-07:00</updated>
+  <id>http://mmoghadas.github.io/</id>
+  <author>
+    <name><![CDATA[Mike Moghadas]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Nook Color with Gingerbread]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/07/10/nook-color-with-gingerbread/"/>
+    <updated>2011-07-10T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/07/10/nook-color-with-gingerbread</id>
+    <content type="html"><![CDATA[<p><strong>Requirements</strong><br/>
+Hardware<br/>
+1. Nook Color [Purchase: <a href="http://www.barnesandnoble.com/nookcolor/index.asp">http://www.barnesandnoble.com/nookcolor/index.asp</a>]<br/>
+2. SD Card [Purchase: <a href="http://www.amazon.com/Transcend-Class-Flash-Memory-TS16GSDHC10E/dp/B003VNKNEQ/ref=sr_1_3?ie=UTF8&amp;qid=1310314654&amp;sr=8-3">http://www.amazon.com/Transcend-Class-Flash-Memory-TS16GSDHC10E/dp/B003VNKNEQ/ref=sr_1_3?ie=UTF8&amp;qid=1310314654&amp;sr=8-3</a>]</p>
+
+<!--more-->
+
+
+<p>Software<br/>
+3. ClockworkMod Recovery v3.0.0.6 Image [Download: <a href="http://forum.xda-developers.com/showthread.php?t=959240%5D">http://forum.xda-developers.com/showthread.php?t=959240%5D</a>]<br/>
+4. cyanogen(mod) ROM Image [Download: <a href="http://download.cyanogenmod.com/?device=encore&amp;type=nightly">http://download.cyanogenmod.com/?device=encore&amp;type=nightly</a>]<br/>
+5. Google Apps [Download: <a href="http://wiki.cyanogenmod.com/index.php?title=Latest_Version/Google_Apps">http://wiki.cyanogenmod.com/index.php?title=Latest_Version/Google_Apps</a>]<br/>
+6. Overclock Kernel [Download: <a href="http://forum.xda-developers.com/showthread.php?t=925451">http://forum.xda-developers.com/showthread.php?t=925451</a>]</p>
+
+<p><strong>Prep your SD Card:</strong><br/>
+1. Created a 1GB ClockworkMod bootable SD<br/>
+2. Copied ROM Image, Google Apps and Overclock Kernel to the bootable SD</p>
+
+<p><strong>Installation:</strong><br/>
+1. Insert SD bard into the Nook Color and Power on<br/>
+2. Format the current partitions<br/>
+a. &#8216;mounts and storage&#8217; &#8211;>; format /system<br/>
+b. &#8216;mounts and storage&#8217; &#8211;>; format /data<br/>
+c. &#8216;mounts and storage&#8217; &#8211;>; format /cache<br/>
+3. Back to main menu<br/>
+4. Install new ROM, Apps and optional Overclock Kernel<br/>
+d. &#8216;install zip from sdcard&#8217; &#8211;>; &#8216;choose zip from sdcard&#8217; &#8211;>; select &#8220;latest_CM7_nightly.zip&#8221;<br/>
+e. &#8216;install zip from sdcard&#8217; &#8211;>; &#8216;choose zip from sdcard&#8217; &#8211;>; select &#8220;gapps-gb-20110120-signed.zip&#8221;<br/>
+f. &#8216;install zip from sdcard&#8217; &#8211;>; &#8216;choose zip from sdcard&#8217; &#8211;>; select &#8220;update-1100mhz-froyo_CM7-emmc-cwm.zip&#8221; [Optional: Nook runs great without it]<br/>
+5. Take out the SD Card<br/>
+6. Reboot</p>
+]]></content>
+  </entry>
+  
+</feed>

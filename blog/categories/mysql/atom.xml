@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mysql | reg88.com]]></title>
+  <link href="http://mmoghadas.github.io/blog/categories/mysql/atom.xml" rel="self"/>
+  <link href="http://mmoghadas.github.io/"/>
+  <updated>2014-07-31T16:05:25-07:00</updated>
+  <id>http://mmoghadas.github.io/</id>
+  <author>
+    <name><![CDATA[Mike Moghadas]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to monitor MySQL Replication]]></title>
+    <link href="http://mmoghadas.github.io/blog/2011/08/02/how-to-monitor-mysql-replication/"/>
+    <updated>2011-08-02T00:00:00-07:00</updated>
+    <id>http://mmoghadas.github.io/blog/2011/08/02/how-to-monitor-mysql-replication</id>
+    <content type="html"><![CDATA[<p>I have spent some time looking for a solution to monitor MySQL Replication with no lock. So I decided to figure something out myself rather than wasting more time or end up paying Oracle. Turns out the setup is actually very simple and can be easily setup with few lines of shell script and a monitoring tool that can produce alerts and graphs via SNMP Traps (PRTG in my case).</p>
+
+<p><strong>What do you need?</strong><br/>
+<em>Note: Make sure to update the below addresses</em><br/>
+MySQL Master: 192.168.1.101<br/>
+MySQL Slave: 192.168.1.102<br/>
+SNMP Tools (snmptrap specifically)<br/>
+Monitoring Server (I use PRTG): 192.168.1.116<br/>
+Your shell script<br/>
+A Replication client user must be created on both Master and Slave servers.</p>
+
+<!--more-->
+
+
+<p><strong>Where do you configure things?</strong><br/>
+You can run the script/cronjob from either Master or the Slave. I configured the job on the Slave server keep the load off the Master.</p>
+
+<p><strong>Step1:</strong> Configure Replication. I’m not going to cover replication here. Plenty of articles available on how to configure replication</p>
+
+<p><strong>Step2:</strong> Create the Replication Client user on Master and Slave. Run the following command on both servers. Make sure to grant REPLICATION CLIENT privilege only.</p>
+
+<p><em>Note: replace the “*<strong>*</strong>*</em><strong><em>” with your password for the new account.</em><br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">GRANT</span> <span class="n">REPLICATION</span> <span class="n">CLIENT</span> <span class="n">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="n">TO</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8216</span><span class="p">;</span><span class="n">rep</span><span class="o">-</span><span class="n">client</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8217</span><span class="p">;@</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8217</span><span class="p">;</span><span class="mf">192.168.1.101</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8242</span><span class="p">;</span> <span class="n">IDENTIFIED</span> <span class="n">BY</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8216</span><span class="p">;</span><span class="o">*&lt;/</span><span class="n">strong</span><span class="o">&gt;*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;**&amp;</span><span class="err">#</span><span class="mi">8217</span><span class="p">;;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Step3:</strong> Test your newly created account’s permissions. Logon to the Slave server and run the following commands Master and the Slave:<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">mysql</span> <span class="o">-</span><span class="n">urep</span><span class="o">-</span><span class="n">client</span> <span class="o">-</span><span class="n">p</span><span class="o">*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;*&lt;</span><span class="n">em</span><span class="o">&gt;&lt;</span><span class="n">em</span><span class="o">&gt;&lt;</span><span class="n">strong</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">h192</span><span class="mf">.168.1.101</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">show</span> <span class="n">master</span> <span class="n">statusG</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">mysql</span> <span class="o">-</span><span class="n">urep</span><span class="o">-</span><span class="n">client</span> <span class="o">-</span><span class="n">p</span><span class="o">*&lt;/</span><span class="n">strong</span><span class="o">&gt;*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;&lt;/</span><span class="n">em</span><span class="o">&gt;&lt;/</span><span class="n">em</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">h192</span><span class="mf">.168.1.102</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">show</span> <span class="n">slave</span> <span class="n">statusG</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Step4:</strong> Create the following script<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">vi</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">MySQL_Replication_Check</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;!/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">MASTER</span> <span class="n">Variables</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">M_Position</span><span class="o">=</span><span class="err">`</span><span class="n">mysql</span> <span class="o">-</span><span class="n">urep</span><span class="o">-</span><span class="n">client</span> <span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;*&lt;</span><span class="n">em</span><span class="o">&gt;&lt;</span><span class="n">strong</span><span class="o">&gt;*</span> <span class="o">-</span><span class="n">h192</span><span class="mf">.168.1.101</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">show</span> <span class="n">master</span> <span class="n">statusG</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">Position</span> <span class="o">|</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8216</span><span class="p">;</span><span class="n">s</span><span class="o">/</span><span class="p">[</span><span class="o">^:</span><span class="p">]</span><span class="o">*:</span><span class="c1">//&amp;#8217;`&lt;br/&gt;</span>
+</span><span class='line'><span class="n">M_File</span><span class="o">=</span><span class="err">`</span><span class="n">mysql</span> <span class="o">-</span><span class="n">urep</span><span class="o">-</span><span class="n">client</span> <span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">*&lt;/</span><span class="n">strong</span><span class="o">&gt;*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;&lt;/</span><span class="n">em</span><span class="o">&gt;*</span> <span class="o">-</span><span class="n">h192</span><span class="mf">.168.1.101</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">show</span> <span class="n">master</span> <span class="n">statusG</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">File</span> <span class="o">|</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8216</span><span class="p">;</span><span class="n">s</span><span class="o">/</span><span class="p">[</span><span class="o">^:</span><span class="p">]</span><span class="o">*:</span><span class="c1">//&amp;#8217;`&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">SLAVE</span> <span class="n">Variables</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">S_Exec_Master_Log_Pos</span><span class="o">=</span><span class="err">`</span><span class="n">mysql</span> <span class="o">-</span><span class="n">urep</span><span class="o">-</span><span class="n">client</span> <span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;*&lt;</span><span class="n">em</span><span class="o">&gt;&lt;</span><span class="n">strong</span><span class="o">&gt;*</span> <span class="o">-</span><span class="n">h192</span><span class="mf">.168.1.102</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">show</span> <span class="n">slave</span> <span class="n">statusG</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">Exec_Master_Log_Pos</span> <span class="o">|</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8216</span><span class="p">;</span><span class="n">s</span><span class="o">/</span><span class="p">[</span><span class="o">^:</span><span class="p">]</span><span class="o">*:</span><span class="c1">//&amp;#8217;`&lt;br/&gt;</span>
+</span><span class='line'><span class="n">S_Master_Log_File</span><span class="o">=</span><span class="err">`</span><span class="n">mysql</span> <span class="o">-</span><span class="n">urep</span><span class="o">-</span><span class="n">client</span> <span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">*&lt;/</span><span class="n">strong</span><span class="o">&gt;*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;&lt;/</span><span class="n">em</span><span class="o">&gt;*</span> <span class="o">-</span><span class="n">h192</span><span class="mf">.168.1.102</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">show</span> <span class="n">slave</span> <span class="n">statusG</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">Master_Log_File</span> <span class="o">|</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8216</span><span class="p">;</span><span class="o">/</span><span class="n">Relay_Master_Log_File</span><span class="o">/</span><span class="n">d</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8217</span><span class="p">;</span> <span class="o">|</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8216</span><span class="p">;</span><span class="n">s</span><span class="o">/</span><span class="p">[</span><span class="o">^:</span><span class="p">]</span><span class="o">*:</span><span class="c1">//&amp;#8217;`&lt;br/&gt;</span>
+</span><span class='line'><span class="n">S_Slave_IO_State</span><span class="o">=</span><span class="err">`</span><span class="n">mysql</span> <span class="o">-</span><span class="n">urep</span><span class="o">-</span><span class="n">client</span> <span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;*&lt;</span><span class="n">em</span><span class="o">&gt;&lt;</span><span class="n">strong</span><span class="o">&gt;*</span> <span class="o">-</span><span class="n">h192</span><span class="mf">.168.1.102</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">show</span> <span class="n">slave</span> <span class="n">statusG</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">Slave_IO_State</span> <span class="o">|</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8216</span><span class="p">;</span><span class="n">s</span><span class="o">/</span><span class="p">[</span><span class="o">^:</span><span class="p">]</span><span class="o">*:</span><span class="c1">//&amp;#8217;`&lt;br/&gt;</span>
+</span><span class='line'><span class="n">S_Seconds_Behind_Master</span><span class="o">=</span><span class="err">`</span><span class="n">mysql</span> <span class="o">-</span><span class="n">urep</span><span class="o">-</span><span class="n">client</span> <span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">*&lt;/</span><span class="n">strong</span><span class="o">&gt;*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;*&lt;</span><span class="n">strong</span><span class="o">&gt;*&lt;/</span><span class="n">strong</span><span class="o">&gt;&lt;/</span><span class="n">em</span><span class="o">&gt;*</span> <span class="o">-</span><span class="n">h192</span><span class="mf">.168.1.102</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">show</span> <span class="n">slave</span> <span class="n">statusG</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">Seconds_Behind_Master</span> <span class="o">|</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8216</span><span class="p">;</span><span class="n">s</span><span class="o">/</span><span class="p">[</span><span class="o">^:</span><span class="p">]</span><span class="o">*:</span><span class="c1">//&amp;#8217;`&lt;br/&gt;</span>
+</span><span class='line'><span class="n">S_Slave_IO_StateString</span><span class="o">=</span><span class="err">`</span><span class="n">echo</span> <span class="err">$</span><span class="n">S_Slave_IO_State</span><span class="err">`</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">S_Slave_IO_StateOK</span><span class="o">=&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="n">Waiting</span> <span class="k">for</span> <span class="n">master</span> <span class="n">to</span> <span class="n">send</span> <span class="n">event</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Replication</span> <span class="n">Overall</span> <span class="n">Status</span><span class="p">.</span> <span class="n">Send</span> <span class="n">SNMPTrap</span> <span class="n">to</span> <span class="n">Monitoring</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="k">if</span> <span class="p">[</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="err">$</span><span class="n">S_Slave_IO_StateString</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="o">==</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="err">$</span><span class="n">S_Slave_IO_StateOK</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="p">]</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="p">[</span> <span class="err">$</span><span class="n">M_Position</span> <span class="o">-</span><span class="n">eq</span> <span class="err">$</span><span class="n">S_Exec_Master_Log_Pos</span> <span class="p">]</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="p">[</span> <span class="err">$</span><span class="n">M_File</span> <span class="o">==</span> <span class="err">$</span><span class="n">S_Master_Log_File</span> <span class="p">]</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="p">[</span> <span class="err">$</span><span class="n">S_Seconds_Behind_Master</span> <span class="o">-</span><span class="n">lt</span> <span class="mi">5</span> <span class="p">]</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">then</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Replication</span> <span class="n">is</span> <span class="n">running</span> <span class="n">fine</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8230</span><span class="p">;.</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">snmptrap</span> <span class="o">-</span><span class="n">v</span> <span class="mi">1</span> <span class="o">-</span><span class="n">c</span> <span class="n">ROpublic</span> <span class="mf">192.168.1.99</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="mf">1.11.12.13.14.15111</span> <span class="n">s</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Replication</span> <span class="n">OK</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="k">else</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Replication</span> <span class="n">BROKEN</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">snmptrap</span> <span class="o">-</span><span class="n">v</span> <span class="mi">1</span> <span class="o">-</span><span class="n">c</span> <span class="n">ROpublic</span> <span class="mf">192.168.1.99</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="mf">1.11.12.13.14.15111</span> <span class="n">s</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Replication</span> <span class="n">Broken</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">fi</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Replication</span> <span class="n">State</span> <span class="n">Status</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Slave</span> <span class="n">IO</span> <span class="n">State</span><span class="o">:</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="err">$</span><span class="n">S_Slave_IO_StateString</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="k">if</span> <span class="p">[</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="err">$</span><span class="n">S_Slave_IO_StateString</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="o">==</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="err">$</span><span class="n">S_Slave_IO_StateOK</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="p">]</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">then</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Replication</span> <span class="n">OK</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="k">else</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Replication</span> <span class="n">STOPPED</span><span class="o">!&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">fi</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Replication</span> <span class="n">Log</span> <span class="n">Files</span> <span class="n">Status</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Master</span> <span class="n">Log</span> <span class="n">File</span><span class="o">:</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="err">$</span><span class="n">M_File</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Slave</span> <span class="n">Log</span> <span class="n">File</span><span class="o">:</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="err">$</span><span class="n">S_Master_Log_File</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="k">if</span> <span class="p">[</span> <span class="err">$</span><span class="n">M_File</span> <span class="o">==</span> <span class="err">$</span><span class="n">S_Master_Log_File</span> <span class="p">]</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">then</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Log</span> <span class="n">Files</span><span class="o">:</span> <span class="n">OK</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="k">else</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Log</span> <span class="n">Files</span> <span class="n">DO</span> <span class="n">NOT</span> <span class="n">Match</span><span class="o">!&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">fi</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Replication</span> <span class="n">Log</span> <span class="n">Position</span> <span class="n">Status</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Master</span> <span class="n">Position</span><span class="o">:</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="err">$</span><span class="n">M_Position</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Slave</span> <span class="n">Position</span><span class="o">:</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="err">$</span><span class="n">S_Exec_Master_Log_Pos</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="k">if</span> <span class="p">[</span> <span class="err">$</span><span class="n">M_Position</span> <span class="o">-</span><span class="n">eq</span> <span class="err">$</span><span class="n">S_Exec_Master_Log_Pos</span> <span class="p">]</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">then</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Position</span><span class="o">:</span> <span class="n">OK</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="k">else</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Slave</span> <span class="n">is</span> <span class="n">Behind</span><span class="o">!&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">fi</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">Slave</span> <span class="n">Seconds</span> <span class="n">Behind</span> <span class="n">Master</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Slave</span> <span class="n">Seconds</span> <span class="n">Behind</span> <span class="n">Master</span><span class="o">:</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span> <span class="err">$</span><span class="n">S_Seconds_Behind_Master</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="k">if</span> <span class="p">[</span> <span class="err">$</span><span class="n">S_Seconds_Behind_Master</span> <span class="o">-</span><span class="n">lt</span> <span class="mi">5</span> <span class="p">]</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">then</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Acceptable</span><span class="o">:</span> <span class="nb">YES</span><span class="o">&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="k">else</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">echo</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8220</span><span class="p">;</span><span class="n">Acceptable</span><span class="o">:</span> <span class="nb">NO</span><span class="p">,</span> <span class="n">Slave</span> <span class="n">is</span> <span class="n">Way</span> <span class="n">Behind</span><span class="o">!&amp;</span><span class="err">#</span><span class="mi">8221</span><span class="p">;</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="n">fi</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Step5:</strong> Create a cronjob to run your new script every 60 seconds. You can adjust this if you like.. All depends on how busy your database is.<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">crontab</span> <span class="o">-</span><span class="n">e</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="cp"># MySQL Replication Check&lt;br/&gt;</span>
+</span><span class='line'><span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">MySQL_Replication_Check</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><strong>Step6:</strong> Configure your monitoring to receive SNMPTraps from your slave (or where you are running your cronjob). The following is meant to be used with PRTG. You can configure other monitoring tools to received SNMP Traps as well.<br/>
+&ndash; Logon to the Web Interface<br/>
+&ndash; Devices<br/>
+&ndash; Select your Probe<br/>
+&ndash; Add Sensor<br/>
+&ndash; Select or search for &#8220;SNMP Trap Receiver&#8221; and complete the following:<br/>
+OID value: 1.11.12.13.14.15111<br/>
+Sender: 192.168.1.102<br/>
+Set sensor to &#8216;warning&#8217;/Message must include: Replication OK<br/>
+Set sensor to &#8216;warning&#8217;/Message must not include: Replication Broken<br/>
+Scanning Interval: 60 seconds</p>
+
+<p><strong>Step7:</strong> Make sure you have SNMP Tools installed.<br/>
+On Redhat:<br/>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">yum</span> <span class="n">install</span> <span class="n">net</span><span class="o">-</span><span class="n">snmp</span><span class="o">-</span><span class="n">utils</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+</feed>

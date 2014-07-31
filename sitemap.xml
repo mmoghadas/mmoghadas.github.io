@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2012/03/01/installing-and-configuring-puppetmaster-and-puppet-clients-on-ubuntu/</loc>
+    <lastmod>2012-03-01T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2012/02/22/how-to-install-homebrew-on-osx-lion/</loc>
+    <lastmod>2012-02-22T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2012/02/01/remote-logging-server-syslog-rsyslog/</loc>
+    <lastmod>2012-02-01T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2012/02/01/note-to-self-dont-use-scripts-on-blogger/</loc>
+    <lastmod>2012-02-01T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2012/02/01/347/</loc>
+    <lastmod>2012-02-01T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2012/01/18/configure-cisco-webvpn-to-use-a-signed-certificate/</loc>
+    <lastmod>2012-01-18T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2012/01/08/install-and-configure-nginxdjangouwsgi-on-ubuntu-10-04-lts/</loc>
+    <lastmod>2012-01-08T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/12/27/updating-vmware-esxi-5-0-with-latest-patches/</loc>
+    <lastmod>2011-12-27T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/12/04/django-wsgi-apache2-on-ubuntu-10-04-lts/</loc>
+    <lastmod>2011-12-04T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/11/18/keep-iis-logs-clean-and-keep-only-a-week-worth-of-logs/</loc>
+    <lastmod>2011-11-18T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/08/02/how-to-monitor-mysql-replication/</loc>
+    <lastmod>2011-08-02T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/07/19/how-to-get-pl2303-usb-to-serial-driver-to-work-on-mac-os-x-10-7-64bit/</loc>
+    <lastmod>2011-07-19T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/07/14/upgrading-ubuntu-9-04-to-10-04-lts/</loc>
+    <lastmod>2011-07-14T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/07/14/installing-packages-on-an-out-of-support-ubuntu-9-04/</loc>
+    <lastmod>2011-07-14T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/07/13/fresh-installation-of-bugzilla-on-ubuntu/</loc>
+    <lastmod>2011-07-13T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/07/12/upgraded-my-mac-to-8gb-ram-first-gen-unibody-with-removable-battery/</loc>
+    <lastmod>2011-07-12T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/07/10/used-osx-10-7-lion-for-12-hours-and-the-verdict-is-meh/</loc>
+    <lastmod>2011-07-10T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/07/10/nook-color-with-gingerbread/</loc>
+    <lastmod>2011-07-10T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/07/09/new-discovery-with-lion-parallels-5-will-not-work-i-finally-had-to-upgrade-to-parallels-6-to-get-access-to-my-bootcamp-and-vms/</loc>
+    <lastmod>2011-07-09T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/07/09/i-have-some-adjusting-to-do-with-osx-lion-got-the-new-gestures-down-but-my-favorite-2-are-missing-from-this-version-of-the-operation-system/</loc>
+    <lastmod>2011-07-09T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/06/03/cleanup-purge-exchange-mailboxes-by-date/</loc>
+    <lastmod>2011-06-03T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/01/07/disable-fwsm-module-cisco-6500/</loc>
+    <lastmod>2011-01-07T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2011/01/04/f5-log-shipping-to-syslog-server/</loc>
+    <lastmod>2011-01-04T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2010/12/28/exchange-server-attachment-limitation-fix/</loc>
+    <lastmod>2010-12-28T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2010/12/28/enabled-webvpn-on-cisco-routers-anyconnect/</loc>
+    <lastmod>2010-12-28T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2010/03/17/configure-linux-server-behind-f5-loadbalancer/</loc>
+    <lastmod>2010-03-17T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2010/02/10/f5-certificate-import-process/</loc>
+    <lastmod>2010-02-10T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2009/11/01/f5-failover-activestandby-issue/</loc>
+    <lastmod>2009-11-01T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2009/10/29/failover-configuration-on-asapix/</loc>
+    <lastmod>2009-10-29T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2009/09/29/updating-exchange-2007-certificate-digicert/</loc>
+    <lastmod>2009-09-29T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2009/04/14/cisco-asavpn-authentication-against-ias-on-windows-2003-r2/</loc>
+    <lastmod>2009-04-14T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2009/04/09/enabling-smtp-relay-on-exchange-2007/</loc>
+    <lastmod>2009-04-09T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2008/12/11/blackberry-storm-is-full-of-bugs/</loc>
+    <lastmod>2008-12-11T00:00:00-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2008/06/06/mark-a-windows-partition-as-active-or-recover-and-reverse-the-change/</loc>
+    <lastmod>2008-06-06T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2008/06/05/how-to-prepare-and-install-vmware-server-on-64-bit-centos-5-x/</loc>
+    <lastmod>2008-06-05T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/2008/06/04/request-tracker-rt/</loc>
+    <lastmod>2008-06-04T00:00:00-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  
+  <url>
+    <loc>http://mmoghadas.github.io/blog/archives/</loc>
+    <lastmod>2014-07-31T16:05:25-07:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://mmoghadas.github.io/</loc>
+    <lastmod>2014-07-31T16:05:25-07:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  
+</urlset>

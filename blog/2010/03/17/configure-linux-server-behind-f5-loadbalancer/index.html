@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Configure Linux server behind F5 Loadbalancer - reg88.com</title>
+  <meta name="author" content="Mike Moghadas">
+
+  
+  <meta name="description" content="Adding Networking: VLANS, ROUTES AND ROUTE DOMAINS
+Create VLAN
+Name: VLAN160-net1-0
+Tag: 160
+Interfaces: Trunk-1 Create Route Domain
+ID: 160
+VLANs: &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mmoghadas.github.io/blog/2010/03/17/configure-linux-server-behind-f5-loadbalancer/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="reg88.com" type="application/atom+xml">
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <div id="logo">
+  	<div id="logoLeft">{</div>
+  	<div id="logoText">mike.moghadas</div>
+  	<div id="logoRight">}</div>
+  	<div class="clear"></div>
+  </div>
+  <h1><a href="/">reg88.com</a></h1>
+  
+    <h2>fine...I&#039;ll blog too</h2>
+  
+  <div class="clear"></div>
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mmoghadas.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 class="entry-title">Configure Linux Server Behind F5 Loadbalancer</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-17T00:00:00-07:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Adding Networking: VLANS, ROUTES AND ROUTE DOMAINS<br/>
+Create VLAN<br/>
+Name: VLAN160-net1-0<br/>
+Tag: 160<br/>
+Interfaces: Trunk-1</p>
+
+<p>Create Route Domain<br/>
+ID: 160<br/>
+VLANs: VLAN160-net1-0</p>
+
+<!--more-->
+
+
+<p>Create Self IP address(s)<br/>
+Self IPs > Create<br/>
+IP Addres: 10.176.160.30%160<br/>
+Netmask: 255.255.255.0<br/>
+VLAN: VLAN160-net1-0</p>
+
+<p>Self IPs > Create<br/>
+IP Addres: 10.176.160.40%160<br/>
+Netmask: 255.255.255.0<br/>
+VLAN: VLAN160-net1-0<br/>
+Floating IP: CHECK</p>
+
+<p>Create Routes<br/>
+Route Domain ID: 160<br/>
+Gateway Address: 10.176.160.1%160</p>
+
+<p>Adding Virtual Server (LB101) for the servers</p>
+
+<p>Create Monitor<br/>
+Name: MON-NET-8080<br/>
+Type: TCP<br/>
+Service Port: 8080</p>
+
+<p>Create a new Node<br/>
+Local Traffic > Nodes > Create<br/>
+Address: 10.176.160.103%160<br/>
+Name: NETAPP101<br/>
+Health Monitors > Node Specific > icmp<br/>
+Repeat for NETAPP102(10.176.160.104%160)</p>
+
+<p>Create a new Pool<br/>
+Local Traffic > Pools > Create<br/>
+Name: POOL-NET<br/>
+Health Monitors: gateway_icmp, MON-NET-8080<br/>
+Action on Service Down: Reselect<br/>
+Load Balancing Method: Round Robin<br/>
+Members: NETAPP101, NETAPP102<br/>
+Service Port: 8080</p>
+
+<p>Create a Profile<br/>
+Local Traffic > Profiles > Protocols > FastL4 > Create<br/>
+Name: NET-FastL4<br/>
+Custom > Loose Close > Enabled</p>
+
+<p>Create a new Virtual Server<br/>
+Local Traffic > Virtual Servers > Create<br/>
+Name: VS-NET-SSL<br/>
+Destination: Host/10.176.160.51%160<br/>
+Service Port: 8080<br/>
+Type: Performance (Layer4)<br/>
+Protocol: TCP<br/>
+Protocol Profile (Client): NET-FastL4<br/>
+VLAN Traffic: VLAN160-net1-0<br/>
+Address Translation: Disabled<br/>
+Port Translation: Disabled<br/>
+SNAT Pool: NONE<br/>
+Default Pool: POOL-NET</p>
+
+<p>ON NETAPP101 and NETAPP102</p>
+
+<p># This is required to get this ports to work with load balancer<br/>
+# iptables -t nat -A PREROUTING -d LOADBALANCEADDRESSHERE -j DNAT &#8211;to-dest SERVERADDRESSHERE</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="err">$</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">t</span> <span class="n">nat</span> <span class="o">-</span><span class="n">A</span> <span class="n">PREROUTING</span> <span class="o">-</span><span class="n">d</span> <span class="mf">10.176.160.51</span> <span class="o">-</span><span class="n">j</span> <span class="n">DNAT</span> <span class="o">&amp;</span><span class="err">#</span><span class="mi">8211</span><span class="p">;</span><span class="n">to</span><span class="o">-</span><span class="n">dest</span> <span class="mf">10.176.160.103</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p># Save config to file</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">iptables</span> <span class="n">save</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p># List the newly created NAT rule</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="err">$</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">t</span> <span class="n">nat</span> <span class="o">-</span><span class="n">L</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Mike Moghadas</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-17T00:00:00-07:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/networking/'>networking</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mmoghadas.github.io/blog/2010/03/17/configure-linux-server-behind-f5-loadbalancer/" data-via="" data-counturl="http://mmoghadas.github.io/blog/2010/03/17/configure-linux-server-behind-f5-loadbalancer/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left articlenav" href="/blog/2010/02/10/f5-certificate-import-process/" title="Previous Post: F5 Certificate Import Process">&laquo; F5 Certificate Import Process</a>
+      
+      
+        <a class="basic-alignment right articlenav" href="/blog/2010/12/28/enabled-webvpn-on-cisco-routers-anyconnect/" title="Next Post: Enabled WebVPN on Cisco routers (AnyConnect)">Enabled WebVPN on Cisco routers (AnyConnect) &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/03/01/installing-and-configuring-puppetmaster-and-puppet-clients-on-ubuntu/">Installing and Configuring Puppetmaster and Puppet Clients (on Ubuntu)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/22/how-to-install-homebrew-on-osx-lion/">How to Install Homebrew on OSX Lion</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/01/remote-logging-server-syslog-rsyslog/">Remote Logging Server: Syslog | Rsyslog</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/01/note-to-self-dont-use-scripts-on-blogger/">Note to Self: Don&#8217;t Use Scripts on Blogger!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/01/347/">How to Configure and Install WordPress on Nginx + PHP-FPM</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Mike Moghadas -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
