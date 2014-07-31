@@ -2,12 +2,13 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://yoursite.com
-title: My Octopress Blog
+url: http://reg88.com
+name: reg88 // Mike Moghadas
+description: 'fine...I&#039;ll blog too'
+title: reg88.com
 subtitle: A blogging framework for hackers.
-author: Your Name
+author: Mike Moghadas
 simple_search: https://www.google.com/search
-description:
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
